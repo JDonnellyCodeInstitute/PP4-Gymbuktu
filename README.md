@@ -1,131 +1,88 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Gymbuktu
 
-Welcome USER_NAME,
+## Project Scope
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+1. Purpose
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+  The purpose of this project is to develop a gym booking system that enables gym members to book, manage, and cancel classes conveniently. It will also provide gym administrators with tools to manage class schedules and attendance efficiently.
 
-## Gitpod Reminders
+2. Target Audience
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+    - Primary Users: Gym members seeking a user-friendly platform to book classes, view schedules, and manage their bookings.
+    - Secondary Users: Gym administrators or staff responsible for overseeing class management and attendance.
 
-`python3 -m http.server`
+3. Scope of Features
 
-A blue button should appear to click: _Make Public_,
+  - 3.1 Minimum Viable Product (MVP)
 
-Another blue button should appear to click: _Open Browser_.
+  The following features are essential for the system:
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+  - User Management:
 
-A blue button should appear to click: _Make Public_,
+    - Member registration and login functionality with email verification.
+    - Secure user authentication leveraging Django’s built-in features.
 
-Another blue button should appear to click: _Open Browser_.
+  - Booking System:
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+    - Browse and search for available gym classes.
+    - Book a class with available slots.
+    - Cancel bookings.
+    - View personal booking history.
 
-To log into the Heroku toolbelt CLI:
+  - Class Management:
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+    - Admin functionality to add, edit, and delete gym classes.
+    - Admin tools to manage class bookings and attendance.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+  - Schedules:
 
-### Connecting your Mongo database
+    - Calendar or list view displaying gym classes for users.
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+  - 3.2 Nice-to-Have Features
 
-------
+  These features are not critical but will enhance the system’s value if implemented:
 
-## Release History
+  - Waitlists:
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+    - Allow users to join a waitlist if a class is full.
 
-**June 18, 2024,** Add Mongo back into template
+  - Notifications:
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+    - Email reminders for upcoming classes.
+    - Notifications for changes or cancellations.
 
-**May 28 2024:** Fix Mongo and Links installs
+  - User Reviews and Ratings:
 
-**April 26 2024:** Update node version to 16
+    - Enable members to rate and review classes or instructors.
 
-**September 20 2023:** Update Python version to 3.9.17.
+  - Mobile-Friendly Enhancements:
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+    - Develop a Progressive Web App (PWA) for better mobile accessibility.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+4. Out of Scope
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+  The following features will not be included in this project to prevent scope creep:
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+    - Real-time payment integration.
+    - Detailed fitness tracking or health metrics.
+    - Multi-gym or franchise-level management capabilities.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+5. Technical Constraints
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+  Frontend: The system’s user interface will use Bootstrap to ensure a responsive and consistent design.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+  Backend: The backend will be built using the Django framework for its robust features and scalability.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+  Database: PostgreSQL will be used as the relational database for storing and managing data.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+  Testing: Core functionalities (e.g., user management, booking, and admin tools) will undergo automated testing.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+  Deployment: The system will be deployed on the cloud platform Heroku for accessibility and scalability.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+6. Success Metrics
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+  The project will be deemed successful if:
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+    - Gym members can register, log in, and book classes without errors.
+    - Administrators can efficiently manage class schedules and bookings.
+    - The system provides a responsive, mobile-friendly user experience.
