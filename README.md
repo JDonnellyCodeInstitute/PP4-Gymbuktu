@@ -63,9 +63,9 @@
 
   The following features will not be included in this project to prevent scope creep:
 
-    - Real-time payment integration.
-    - Detailed fitness tracking or health metrics.
-    - Multi-gym or franchise-level management capabilities.
+  - Real-time payment integration.
+  - Detailed fitness tracking or health metrics.
+  - Multi-gym or franchise-level management capabilities.
 
 5. Technical Constraints
 
@@ -83,6 +83,6 @@
 
   The project will be deemed successful if:
 
-    - Gym members can register, log in, and book classes without errors.
-    - Administrators can efficiently manage class schedules and bookings.
-    - The system provides a responsive, mobile-friendly user experience.
+  - Gym members can register, log in, and book classes without errors.
+  - Administrators can efficiently manage class schedules and bookings.
+  - The system provides a responsive, mobile-friendly user experience.
