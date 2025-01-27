@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'facilities',
     'feedback',
     'base_static',
-    'gym_goers',
+    'accounts',
 ]
 
 MIDDLEWARE = [

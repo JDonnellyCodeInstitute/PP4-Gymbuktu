@@ -20,13 +20,13 @@ from classes.views import classes_test
 from facilities.views import facilities_test
 from feedback.views import feedback_test
 from base_static.views import static_test
-from gym_goers.views import gym_goers_test
+from accounts.views import accounts_test
 
 urlpatterns = [
     path('classes/', classes_test, name='classes'),
     path('facilities/', facilities_test, name='facilities'),
     path('feedback/', feedback_test, name='feedback'),
     path('base_static/', static_test, name='base_static'),
-    path('gym_goers/', gym_goers_test, name='gym_goers'),
+    path('accounts/', accounts_test, name='accounts'),
     path('admin/', admin.site.urls),
 ]
