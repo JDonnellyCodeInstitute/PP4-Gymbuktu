@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | GymBukTu{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero text-center">
+    <div class="container">
+        <h1>Sign Up Today for High-Quality Classes and Facilities!</h1>
+        <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials text-center py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonial">
+                    <p>Positive feedback from gym goer</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial">
+                    <p>Positive feedback from gym goer</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial">
+                    <p>Positive feedback from gym goer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
