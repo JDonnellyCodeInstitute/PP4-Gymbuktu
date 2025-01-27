@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 from facilities.models import Facilitie
 
-# Create your models here.
+STATUS = ((0, "Confirmed"), (1, "Cancelled"))
+
 class Class(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
@@ -27,3 +29,13 @@ class Class(models.Model):
         if not self.capacity:
             self.capacity = self.facility.max_capacity
         super().save(*args, **kwargs)
+
+class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    gym_class = models.ForeignKey(Class, on_delete=models.CASCADE)   
+    # Status of the booking (e.g., confirmed, cancelled)
+    status = models.IntegerField(choices=STATUS, default=0)
+    date = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.gym_class.name} ({self.self.get_status_display()})"
