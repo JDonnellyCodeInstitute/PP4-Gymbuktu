@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'classes',
     'facilities',
     'feedback',
-    'base_static',
+    'base_page',
     'accounts',
 ]
 
