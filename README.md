@@ -98,8 +98,8 @@ NavBar HREFs:
 {% url 'classes' %}
 {% url 'feedback' %}
 {% url 'profile' %}
-{% url 'logout' %}
-{% url 'login' %}
+
+
 
 
 Footer HREF:
