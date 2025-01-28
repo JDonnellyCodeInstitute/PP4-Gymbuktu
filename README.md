@@ -100,7 +100,7 @@ NavBar HREFs:
 {% url 'profile' %}
 {% url 'logout' %}
 {% url 'login' %}
-{% url 'signup' %}
+
 
 Footer HREF:
 {% url 'rules' %}

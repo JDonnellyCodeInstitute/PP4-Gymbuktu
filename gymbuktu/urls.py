@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from base_static import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('accounts/', include('accounts.urls'), name="accounts-urls"),
     path('admin/', admin.site.urls),
+    path('', include('base_static.urls'), name="base-static-urls"),
 ]
