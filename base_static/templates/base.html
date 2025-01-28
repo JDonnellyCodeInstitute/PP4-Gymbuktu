@@ -22,17 +22,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'classes' %}">Classes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'feedback' %}">Feedback</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">Classes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">Feedback</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">Profile</a></li>
                 </ul>
                 <ul class="navbar-nav ms-3">
                     {% if user.is_authenticated %}
                         <li class="nav-item">Hello, {{ user.username }}</li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">Log Out</a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">Sign Up</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -53,7 +53,7 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
-                <p>&copy; GymBukTu Limited 2025 | <a href="{% url 'rules' %}">Gym Rules</a></p>
+                <p>&copy; GymBukTu Limited 2025 | <a href="">Gym Rules</a></p>
             </div>
         </footer>
      </footer>

@@ -86,3 +86,24 @@
   - Gym members can register, log in, and book classes without errors.
   - Administrators can efficiently manage class schedules and bookings.
   - The system provides a responsive, mobile-friendly user experience.
+
+
+Code for later:
+Testimonial image src:
+{% static 'images/gym-goer-1.jpg' %}
+{% static 'images/gym-goer-2.jpg' %}
+{% static 'images/gym-goer-3.jpg' %}
+
+NavBar HREFs:
+{% url 'classes' %}
+{% url 'feedback' %}
+{% url 'profile' %}
+{% url 'logout' %}
+{% url 'login' %}
+{% url 'signup' %}
+
+Footer HREF:
+{% url 'rules' %}
+
+Hero banner:
+{% url 'signup' %}
