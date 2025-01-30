@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center">Gym Rules</h2>
+    <div class="card shadow-lg p-4">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">✅ Wipe down equipment after use.</li>
+            <li class="list-group-item">✅ Return weights to their racks.</li>
+            <li class="list-group-item">✅ Wear appropriate gym attire and footwear.</li>
+            <li class="list-group-item">✅ Respect other gym-goers and maintain good hygiene.</li>
+            <li class="list-group-item">✅ No loud grunting or excessive noise.</li>
+            <li class="list-group-item">✅ Do not drop weights on the floor.</li>
+            <li class="list-group-item">✅ Follow time limits on machines during peak hours.</li>
+            <li class="list-group-item">✅ Report any broken equipment to staff.</li>
+            <li class="list-group-item">✅ No food or open drinks allowed in the gym area.</li>
+            <li class="list-group-item">✅ Always carry a towel and water bottle.</li>
+        </ul>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

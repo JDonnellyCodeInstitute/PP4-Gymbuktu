@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
-# Create your views here.
-def facilities_test(request):
-    return HttpResponse("Hello, World!")
+def gym_rules(request):
+    return render(request, 'facilities/rules.html')

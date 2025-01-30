@@ -29,7 +29,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="">Classes</a></li>
                     <li class="nav-item"><a class="nav-link" href="">Feedback</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
                 </ul>
                 <ul class="navbar-nav ms-3">
                     {% if user.is_authenticated %}
@@ -58,7 +58,7 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
-                <p>&copy; GymBukTu Limited 2025 | <a href="">Gym Rules</a></p>
+                <p>&copy; GymBukTu Limited 2025 | <a href="{% url 'gym_rules' %}">Gym Rules</a></p>
             </div>
         </footer>
      </footer>
