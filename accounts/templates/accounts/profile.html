@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ user.username }}</h2>
+
+    <!-- Current Bookings Section -->
+    <h3>Current Bookings</h3>
+    {% if current_bookings %}
+        <ul class="list-group">
+            {% for booking in current_bookings %}
+                <li class="list-group-item">
+                    {{ booking.class_name }} - {{ booking.date }} at {{ booking.time }}
+                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm float-end">Cancel</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no upcoming bookings.</p>
+    {% endif %}
+
+    <!-- Past Bookings Section with Collapsible Accordion -->
+    <h3 class="mt-4">
+        <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#pastBookings">
+            Past Bookings <span class="fw-bold">+</span>
+        </button>
+    </h3>
+    
+    <div id="pastBookings" class="collapse">
+        {% if past_bookings %}
+            <ul class="list-group">
+                {% for booking in past_bookings %}
+                    <li class="list-group-item">
+                        {{ booking.class_name }} - {{ booking.date }} at {{ booking.time }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No past bookings found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Quick Links Section -->
+    <h3 class="mt-4">Quick Links</h3>
+    <ul>
+        <li><a href="">View Classes</a></li> <!-- URL TO BE ADDED -->
+        <li><a href="">Give Feedback</a></li> <!-- URL TO BE ADDED -->
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}

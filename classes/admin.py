@@ -9,6 +9,6 @@ class ClassAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('user', 'gym_class', 'status', 'date')
-    list_filter = ('status', 'date')
+    list_display = ('user', 'gym_class', 'class_status', 'date')
+    list_filter = ('class_status', 'date')
     search_fields = ('user__username', 'gym_class__name')

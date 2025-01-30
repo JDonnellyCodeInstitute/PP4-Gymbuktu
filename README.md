@@ -99,11 +99,5 @@ NavBar HREFs:
 {% url 'feedback' %}
 {% url 'profile' %}
 
-
-
-
 Footer HREF:
 {% url 'rules' %}
-
-Hero banner:
-{% url 'signup' %}

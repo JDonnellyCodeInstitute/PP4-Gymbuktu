@@ -18,8 +18,8 @@ def signup(request):
 
 @login_required
 def profile(request):
-    current_bookings = Booking.objects.filter(user=request.user, status="upcoming")
-    past_bookings = Booking.objects.filter(user=request.user, status="completed")
+    current_bookings = Booking.objects.filter(user=request.user, class_status=0)
+    past_bookings = Booking.objects.filter(user=request.user, class_status=2)
 
     return render(
         request,
