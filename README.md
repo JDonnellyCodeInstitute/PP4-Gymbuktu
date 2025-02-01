@@ -96,8 +96,3 @@ Testimonial image src:
 
 NavBar HREFs:
 {% url 'classes' %}
-{% url 'feedback' %}
-
-
-Footer HREF:
-{% url 'rules' %}

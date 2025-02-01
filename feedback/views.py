@@ -11,7 +11,7 @@ def feedback_view(request):
             feedback = form.save(commit=False)
             feedback.user = request.user
             feedback.save()
-            return redirect("feedback_received")
+            return redirect("") # Will be creating a feedback_received view and template to redirect to
     else:
         form = FeedbackForm()
 

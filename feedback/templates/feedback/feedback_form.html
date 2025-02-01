@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Submit Your Feedback</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+
+  <h3>Your Previous Feedback</h3>
+  <ul>
+    {% for feedback in feedback_entries %}
+      <li>{{ feedback.timestamp }}: {{ feedback.content }}</li>
+    {% empty %}
+      <li>No feedback submitted yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
