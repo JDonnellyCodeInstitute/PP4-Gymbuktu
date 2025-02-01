@@ -11,10 +11,14 @@ def feedback_view(request):
             feedback = form.save(commit=False)
             feedback.user = request.user
             feedback.save()
-            return redirect("") # Will be creating a feedback_received view and template to redirect to
+            return redirect("feedback_received")
     else:
         form = FeedbackForm()
 
     feedback_entries = Feedback.objects.filter(user=request.user).order_by("-timestamp")
 
     return render(request, "feedback/feedback_form.html", {"form": form, "feedback_entries": feedback_entries})
+
+
+def feedback_received(request):
+    return render(request, "feedback/feedback_received.html")
