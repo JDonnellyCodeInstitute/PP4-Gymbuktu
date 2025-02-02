@@ -24,3 +24,16 @@ def book_class(request, class_id):
         return redirect("booking_confirmation", class_id=gym_class.id)
     
     return render(request, "classes/booking_confirmation.html", {"gym_class": gym_class})
+
+    @login_required
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    
+    if request.method == "POST":
+        booking.class_status = 1
+        booking.save()
+        booking.gym_class.booked_slots -= 1
+        booking.gym_class.save()
+        return redirect("class_list")
+    
+    return render(request, "classes/cancel_booking.html", {"booking": booking})
