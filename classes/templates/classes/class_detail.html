@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>{{ gym_class.name }}</h2>
+    <p>{{ gym_class.description }}</p>
+    <p>Instructor: {{ gym_class.instructor.name }}</p>
+    <p>Date: {{ gym_class.date }} | Time: {{ gym_class.time }}</p>
+    <p>Slots Available: {{ gym_class.available_slots }}</p>
+    
+    {% if gym_class.available_slots > 0 %}
+        <form method="post" action="{% url 'book_class' gym_class.id %}">
+            {% csrf_token %}
+            <button type="submit">Book This Class</button>
+        </form>
+    {% else %}
+        <p>No slots available.</p>
+    {% endif %}
+{% endblock %}
