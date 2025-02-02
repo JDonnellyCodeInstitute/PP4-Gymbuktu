@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Booking Confirmation</h2>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% else %}
+        <p>You have successfully booked {{ gym_class.name }} on {{ gym_class.date }} at {{ gym_class.time }}.</p>
+    {% endif %}
+    <a href="{% url 'class_list' %}">Back to Classes</a>
+{% endblock %}
