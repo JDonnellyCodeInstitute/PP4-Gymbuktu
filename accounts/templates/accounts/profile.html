@@ -43,8 +43,8 @@
     <!-- Quick Links Section -->
     <h3 class="mt-4">Quick Links</h3>
     <ul>
-        <li><a href="">View Classes</a></li> <!-- URL TO BE ADDED -->
-        <li><a href="">Give Feedback</a></li> <!-- URL TO BE ADDED -->
+        <li><a href="{% url 'class_list' %}">View Classes</a></li>
+        <li><a href="{% url 'feedback' %}">Give Feedback</a></li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
 </div>
