@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Available Classes</h2>
+    <ul>
+        {% for gym_class in classes %}
+            <li>
+                <a href="{% url 'class_detail' gym_class.id %}">{{ gym_class.name }}</a> - {{ gym_class.date }} at {{ gym_class.time }}
+                ({{ gym_class.available_slots }} slots left)
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
