@@ -8,7 +8,17 @@ def class_list(request):
 
 def class_detail(request, class_id):
     gym_class = get_object_or_404(Class, id=class_id)
-    return render(request, "classes/class_detail.html", {"gym_class": gym_class})
+    
+    # Get the user's booking (if any)
+    booking = None
+    if request.user.is_authenticated:
+        booking = Booking.objects.filter(user=request.user, gym_class=gym_class, class_status=0).first()
+
+    return render(request, "classes/class_detail.html", {
+        "gym_class": gym_class,
+        "has_booking": booking is not None,
+        "booking_id": booking.id if booking else None
+    })
 
 @login_required
 def book_class(request, class_id):

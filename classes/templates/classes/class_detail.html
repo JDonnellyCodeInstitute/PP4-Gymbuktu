@@ -5,8 +5,13 @@
     <p>Instructor: {{ gym_class.instructor.name }}</p>
     <p>Date: {{ gym_class.date }} | Time: {{ gym_class.time }}</p>
     <p>Slots Available: {{ gym_class.available_slots }}</p>
-    
-    {% if gym_class.available_slots > 0 %}
+
+    {% if has_booking %}
+        <form method="post" action="{% url 'cancel_booking' booking_id %}">
+            {% csrf_token %}
+            <button type="submit">Cancel Booking</button>
+        </form>
+    {% elif gym_class.available_slots > 0 %}
         <form method="post" action="{% url 'book_class' gym_class.id %}">
             {% csrf_token %}
             <button type="submit">Book This Class</button>
