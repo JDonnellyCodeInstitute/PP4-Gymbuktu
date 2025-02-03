@@ -1,0 +1,19 @@
+/* Header - avoid overlap with body */
+header {
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+body {
+    padding-top: 80px; /* In line with header height */
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
