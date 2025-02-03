@@ -4,7 +4,7 @@
     <ul>
         {% for gym_class in classes %}
             <li>
-                <a href="{% url 'class_detail' gym_class.id %}">{{ gym_class.name }}</a> - {{ gym_class.date }} at {{ gym_class.time }}
+                <a href="{% url 'class_detail' gym_class.id %}">{{ gym_class.name }}</a> - {{ gym_class.start_time.date|date:"D d/m" }} at {{ gym_class.start_time.time|time:"H:i" }}
                 ({{ gym_class.available_slots }} slots left)
             </li>
         {% endfor %}

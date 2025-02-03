@@ -3,7 +3,7 @@
     <h2>{{ gym_class.name }}</h2>
     <p>{{ gym_class.description }}</p>
     <p>Instructor: {{ gym_class.instructor.name }}</p>
-    <p>Date: {{ gym_class.date }} | Time: {{ gym_class.time }}</p>
+    <p>Date: {{ gym_class.start_time.date }} | Time: {{ gym_class.start_time.time }}</p>
     <p>Slots Available: {{ gym_class.available_slots }}</p>
 
     {% if has_booking %}
