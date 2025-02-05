@@ -1,19 +1,149 @@
-/* Header - avoid overlap with body */
+/* Header */
 header {
-    height: 80px;
+    height: 85px;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
+    background-color: #4289cf;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 2px solid black;
 }
 
+/* GymBukTu Logo */
+.logo-text {
+    font-weight: bold;
+}
+
+header .navbar-brand {
+    font-size: 3rem;
+    color: white;
+}
+
+header .navbar-brand:hover {
+    color: white;
+}
+
+/* Greeting / links top right - large screens */
+.auth-links {
+    margin-right: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.auth-links a {
+    display: inline-block;
+    margin: 0 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-links a:hover {
+    background-color: rgb(141, 208, 235);
+}
+
+.auth-links span {
+    font-size: large;
+}
+
+/* Navigation Styling */
+.nav-container {
+    display: flex;
+    width: 100%;
+    background-color: black;
+}
+
+.nav-box {
+    flex: 1;
+    width: 25%;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+    background-color: white;
+    text-decoration: none;
+    color: black;
+    transition: background 0.3s ease;
+    border-right: 2px solid black; /* Create clear divisions */
+    border-bottom: 2px solid black;
+}
+
+/* Remove right border from last item to avoid extra line */
+.nav-box:last-child {
+    border-right: none;
+}
+
+.nav-box:hover {
+    background-color: lightgray;
+}
+
+
+/* Body */
 body {
-    padding-top: 80px; /* In line with header height */
+    padding-top: 85px;
 }
 
+/* Footer */
 footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+/* For smaller screens */
+@media (max-width: 991px) {
+    .burger .navbar-toggler-icon {
+        filter: brightness(0) invert(1); /* Converts burger to white */
+    }
+
+    .burger {
+        margin-right: 10px;
+    }
+
+    .nav-container {
+        display: none;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .navbar-nav {
+        background: white;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link {
+        display: block;
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        color: black;
+        border-bottom: 1px solid black;
+    }
+
+    .navbar-nav .nav-link:last-child {
+        border-bottom: none;
+    }
+
+    .navbar-nav .nav-link:hover {
+        background-color: lightgray;
+    }
+
+    /* Shrink logo */
+    header .navbar-brand {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .burger {
+        margin-right: 5px;
+    }
 }
