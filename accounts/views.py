@@ -23,7 +23,7 @@ def signup(request):
             email_data = {
                 "to_email": user.email,
                 "username": user.username,
-                "verification_link": f"http://yourdomain.com/accounts/verify/{token_obj.token}/"
+                "verification_link": f"http://127.0.0.1.com/accounts/verify/{token_obj.token}/"
             }
 
             # Send email
@@ -43,6 +43,21 @@ def signup(request):
     return render(request, 'accounts/signup.html', {'form': form})
 
 
+def verify_email(request, token):
+    token_obj = get_object_or_404(EmailVerification, token=token)
+
+    if token_obj.is_verified:
+        return render(request, "accounts/already_verified.html")
+
+    # Activate user account
+    user = token_obj.user
+    user.is_active = True
+    user.save()
+
+    token_obj.is_verified = True
+    token_obj.save()
+
+    return redirect("login")
 
 
 @login_required
