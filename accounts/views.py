@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SignUpForm
-from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from classes.models import Booking
-from django.contrib.auth.models import User
-import uuid
 from django.core.mail import send_mail
 from .models import EmailVerification
+
 
 def signup(request):
     if request.method == 'POST':
@@ -29,7 +27,9 @@ def signup(request):
             # Send email
             send_mail(
                 "Verify Your Account",
-                f"Click the link to verify your account: {email_data['verification_link']}",
+                f"""
+                Click to verify your account:
+                {email_data['verification_link']}""",
                 "joe.donnelly.bmc@gmail.com",
                 [user.email],
                 fail_silently=False,
@@ -58,6 +58,18 @@ def verify_email(request, token):
     token_obj.save()
 
     return redirect("login")
+
+
+def check_email(request):
+    """Displays a message prompting the user
+    to check their email for verification."""
+    return render(request, "accounts/check_email.html")
+
+
+def already_verified(request):
+    """Displays a message when a user
+    tries to verify an already-verified account."""
+    return render(request, "accounts/already_verified.html")
 
 
 @login_required
