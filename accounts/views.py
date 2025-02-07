@@ -17,11 +17,15 @@ def signup(request):
             # Create verification token
             token_obj = EmailVerification.objects.create(user=user)
 
+            # Get site domain so verification works in prod or dev
+            current_site = request.get_host()
+            verification_link = f"http://{current_site}/accounts/verify/{token_obj.token}/"
+
             # EmailJS Data
             email_data = {
                 "to_email": user.email,
                 "username": user.username,
-                "verification_link": f"http://127.0.0.1.com/accounts/verify/{token_obj.token}/"
+                "verification_link": verification_link
             }
 
             # Send email
