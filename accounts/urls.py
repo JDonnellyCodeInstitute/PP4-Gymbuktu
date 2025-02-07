@@ -11,4 +11,7 @@ urlpatterns = [
     ), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'), name='logout'),
     path('profile/', views.profile, name='profile'),
+    path('check-email/', views.check_email, name='check_email'),
+    path('verify/<uuid:token>/', views.verify_email, name='verify_email'),
+    path('already-verified/', views.already_verified, name='already_verified'),
 ]
