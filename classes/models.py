@@ -24,6 +24,7 @@ class Class(models.Model):
     )
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    class_status = models.IntegerField(choices=CLASS_STATUS, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -36,6 +37,8 @@ class Class(models.Model):
     def mark_completed(self):
         """Marks the class as completed if it has ended."""
         if self.end_time < timezone.now():
+            self.class_status = 2
+            self.save()
             self.bookings.filter(class_status=0).update(class_status=2)
 
     def __str__(self):

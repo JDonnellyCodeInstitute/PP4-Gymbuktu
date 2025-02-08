@@ -9,15 +9,16 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         now = timezone.now()
 
-        # Get all classes that have ended but are not marked as completed
+        # Get all classes that have ended and are marked as confirmed
         completed_classes = Class.objects.filter(
-            end_time__lt=now
+            end_time__lt=now,
+            class_status=0
         )
 
         # Update status
         updated_count = 0
         for gym_class in completed_classes:
-            gym_class.status = 2
+            gym_class.class_status = 2
             gym_class.save()
             updated_count += 1
 
