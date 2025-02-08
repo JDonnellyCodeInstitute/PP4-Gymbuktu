@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignUpForm
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import SignUpForm
 from classes.models import Booking
 from django.core.mail import send_mail
 from .models import EmailVerification
@@ -89,3 +91,9 @@ def profile(request):
             'past_bookings': past_bookings,
         }
     )
+
+def auto_logout(request):
+    """Logs out user after inactivity and redirects to login page with a message."""
+    logout(request)
+    messages.warning(request, "You have been logged out due to inactivity.")
+    return redirect("login")
