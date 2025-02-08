@@ -1,19 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Class, Booking
+from .models import Class, Booking, Instructor
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 
 def class_list(request):
     """Display all upcoming classes with optional filters."""
+    # Current time
+    now = timezone.now()
+
+    # Base querysets
+    classes = Class.objects.filter(end_time__gt=now)
+    instructors = Instructor.objects.all()
 
     # Get query parameters
-    class_type = request.GET.get("class_type", "")
-    date_filter = request.GET.get("date", "")
-    time_filter = request.GET.get("time", "")
-
-    # Base queryset
-    classes = Class.objects.filter(start_time__gte=timezone.now())
+    class_type = request.GET.get("class_type", "").strip()
+    date_filter = request.GET.get("date", "").strip()
+    instructor_id = request.GET.get("instructor", "").strip()
 
     # Apply filters
     if class_type:
@@ -22,10 +25,13 @@ def class_list(request):
     if date_filter:
         classes = classes.filter(start_time__date=date_filter)
 
-    if time_filter:
-        classes = classes.filter(start_time__time=time_filter)
+    if instructor_id:
+        classes = classes.filter(instructor_id=instructor_id)
 
-    return render(request, "classes/class_list.html", {"classes": classes})
+    return render(request, "classes/class_list.html", {
+        "classes": classes,
+        "instructors": instructors,
+    })
 
 
 def class_detail(request, class_id):
