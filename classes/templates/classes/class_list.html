@@ -1,12 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2>Available Classes</h2>
+
+    <!-- Filter Form -->
+    <form method="GET" action="{% url 'class_list' %}">
+        <label for="class_type">Class Type:</label>
+        <input type="text" name="class_type" id="class_type" placeholder="Search by class name" value="{{ request.GET.class_type }}">
+
+        <label for="date">Date:</label>
+        <input type="date" name="date" id="date" value="{{ request.GET.date }}">
+
+        <label for="instructor">Instructor:</label>
+        <select name="instructor" id="instructor">
+            <option value="">Any Instructor</option>
+            {% for instructor in instructors %}
+                <option value="{{ instructor.id }}" {% if request.GET.instructor == instructor.id|stringformat:"s" %}selected{% endif %}>
+                    {{ instructor.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Class Listings -->
     <ul>
         {% for gym_class in classes %}
             <li>
-                <a href="{% url 'class_detail' gym_class.id %}">{{ gym_class.name }}</a> - {{ gym_class.start_time.date|date:"D d/m" }} at {{ gym_class.start_time.time|time:"H:i" }}
-                ({{ gym_class.available_slots }} slots left)
+                <a href="{% url 'class_detail' gym_class.id %}">{{ gym_class.name }}</a> -
+                {{ gym_class.start_time|date:"D, d M Y" }} at {{ gym_class.start_time|time:"H:i" }}
+
+                {% if gym_class.available_slots > 0 %}
+                    ({{ gym_class.available_slots }} slots left)
+                {% else %}
+                    <span class="badge bg-danger">FULL</span>
+                {% endif %}
             </li>
+        {% empty %}
+            <li>No classes available matching your filters.</li>
         {% endfor %}
     </ul>
 {% endblock %}
