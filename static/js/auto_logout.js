@@ -5,7 +5,7 @@ function resetLogoutTimer() {
     clearTimeout(logoutTimer);
     logoutTimer = setTimeout(function() {
         window.location.href = "/accounts/logout/";
-    }, 90000);
+    }, 900000);
 }
 
 // Reset timer on user input
