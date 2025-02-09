@@ -41,8 +41,8 @@
                 {% if gym_class.class_status == 2 %}
                     <p class="text-muted">This class has already been completed.</p>
 
-                {% elif gym_class.start_time <= now %}
-                    <p class="text-muted">This class has already started and can no longer be booked.</p>
+                {% elif gym_class.start_time <= now and gym_class.end_time > now %}
+                    <p class="text-muted">This class has already started and can no longer be booked or cancelled.</p>
 
                 {% elif has_booking %}
                     <form method="post" action="{% url 'cancel_booking' booking_id %}">

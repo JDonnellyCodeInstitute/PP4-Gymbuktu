@@ -37,6 +37,7 @@ def class_list(request):
 
 def class_detail(request, class_id):
     gym_class = get_object_or_404(Class, id=class_id)
+    now = timezone.now()
 
     # Get the user's booking (if any)
     booking = None
@@ -47,7 +48,8 @@ def class_detail(request, class_id):
     return render(request, "classes/class_detail.html", {
         "gym_class": gym_class,
         "has_booking": booking is not None,
-        "booking_id": booking.id if booking else None
+        "booking_id": booking.id if booking else None,
+        "now": now
     })
 
 
