@@ -80,6 +80,9 @@
 
     <!-- Mobile Card View -->
     <div class="row d-md-none">
+        <div class="col-12 text-center bg-primary text-white py-2 fs-5 rounded-top">
+            <strong>{% if request.GET.date %} {{ request.GET.date }} {% else %} Today {% endif %}</strong>
+        </div>
         {% for gym_class in classes %}
             <div class="col-12 mb-3">
                 <div class="card shadow">
