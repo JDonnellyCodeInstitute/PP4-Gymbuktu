@@ -1,26 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Available Classes</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Available Classes</h2>
 
     <!-- Filter Form -->
-    <form method="GET" action="{% url 'class_list' %}">
-        <label for="class_type">Class Type:</label>
-        <input type="text" name="class_type" id="class_type" placeholder="Search by class name" value="{{ request.GET.class_type }}">
-
-        <label for="date">Date:</label>
-        <input type="date" name="date" id="date" value="{{ request.GET.date }}">
-
-        <label for="instructor">Instructor:</label>
-        <select name="instructor" id="instructor">
-            <option value="">Any Instructor</option>
-            {% for instructor in instructors %}
-                <option value="{{ instructor.id }}" {% if request.GET.instructor == instructor.id|stringformat:"s" %}selected{% endif %}>
-                    {{ instructor.name }}
-                </option>
-            {% endfor %}
-        </select>
-
-        <button type="submit">Filter</button>
+    <form method="GET" action="{% url 'class_list' %}" class="mb-4 p-3 bg-light rounded">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-4">
+                <label for="class_type" class="form-label">Class Type:</label>
+                <input type="text" name="class_type" id="class_type" class="form-control"
+                    placeholder="Search by class name" value="{{ request.GET.class_type }}">
+            </div>
+            <div class="col-md-4">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" name="date" id="date" class="form-control" value="{{ request.GET.date }}">
+            </div>
+            <div class="col-md-4">
+                <label for="instructor" class="form-label">Instructor:</label>
+                <select name="instructor" id="instructor" class="form-select">
+                    <option value="">Any Instructor</option>
+                    {% for instructor in instructors %}
+                        <option value="{{ instructor.id }}"
+                            {% if request.GET.instructor == instructor.id|stringformat:"s" %}selected{% endif %}>
+                            {{ instructor.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
     </form>
 
     <!-- Class Listings -->
