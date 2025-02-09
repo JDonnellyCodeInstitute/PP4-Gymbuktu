@@ -33,10 +33,55 @@
         </div>
     </form>
 
-    <!-- Class Listings -->
-    <div class="row">
+    <!-- Desktop Table View -->
+    <div class="table-responsive d-none d-md-block">
+        <table class="table table-bordered text-center">
+            <thead class="table-primary">
+                <tr>
+                    <th colspan="5" class="fs-5 py-2">
+                        <strong>{% if request.GET.date %} {{ request.GET.date }} {% else %} Today {% endif %}</strong>
+                    </th>
+                </tr>
+                <tr class="table-dark">
+                    <th>Class</th>
+                    <th>Time (Duration)</th>
+                    <th>Facility</th>
+                    <th>Instructor</th>
+                    <th>Spaces</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gym_class in classes %}
+                    <tr>
+                        <td><a href="{% url 'class_detail' gym_class.id %}" class="text-decoration-none">{{ gym_class.name }}</a></td>
+                        <td>{{ gym_class.start_time|time:"H:i" }} - {{ gym_class.end_time|time:"H:i" }}</td>
+                        <td>{{ gym_class.facility.name }}</td>
+                        <td>{{ gym_class.instructor.name }}</td>
+                        <td>
+                            {% if gym_class.class_status == 2 %}
+                                <span class="badge bg-secondary">Completed</span>
+                            {% elif gym_class.start_time <= now and gym_class.end_time > now %}
+                                <span class="badge bg-warning">In Progress</span>
+                            {% elif gym_class.available_slots == 0 %}
+                                <span class="badge bg-danger">0 (Waiting List)</span>
+                            {% else %}
+                                <span class="badge bg-success">{{ gym_class.available_slots }} Spaces Left</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No classes available matching your filters.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="row d-md-none">
         {% for gym_class in classes %}
-            <div class="col-md-4 mb-4">
+            <div class="col-12 mb-3">
                 <div class="card shadow">
                     <div class="card-body">
                         <h5 class="card-title">
@@ -69,5 +114,6 @@
             <p class="text-center">No classes available matching your filters.</p>
         {% endfor %}
     </div>
+
 </div>
 {% endblock %}
