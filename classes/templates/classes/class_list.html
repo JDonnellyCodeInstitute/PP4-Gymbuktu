@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Available Classes</h2>
+    <h2 class="text-center mb-4">Book a Fitness Class</h2>
 
     <!-- Filter Form -->
     <form method="GET" action="{% url 'class_list' %}" class="mb-4 p-3 bg-light rounded">
@@ -34,24 +34,40 @@
     </form>
 
     <!-- Class Listings -->
-    <ul>
+    <div class="row">
         {% for gym_class in classes %}
-            <li>
-                <a href="{% url 'class_detail' gym_class.id %}">{{ gym_class.name }}</a> -
-                {{ gym_class.start_time|date:"D, d M Y" }} at {{ gym_class.start_time|time:"H:i" }}
-
-                {% if gym_class.class_status == 2 %}
-                    <span class="badge bg-secondary">Completed</span>
-                {% elif gym_class.start_time <= now and gym_class.end_time > now %}
-                    <span class="badge bg-warning">In Progress</span>
-                {% elif gym_class.available_slots > 0 %}
-                    ({{ gym_class.available_slots }} slots left)
-                {% else %}
-                    <span class="badge bg-danger">FULL</span>
-                {% endif %}
-            </li>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'class_detail' gym_class.id %}" class="text-decoration-none">
+                                {{ gym_class.name }}
+                            </a>
+                        </h5>
+                        <p class="card-text">
+                            <strong>Instructor:</strong> {{ gym_class.instructor.name }} <br>
+                            <strong>Facility:</strong> {{ gym_class.facility.name }} <br>
+                            <strong>Date:</strong> {{ gym_class.start_time|date:"D, d M Y" }} <br>
+                            <strong>Time:</strong> {{ gym_class.start_time|time:"H:i" }} - {{ gym_class.end_time|time:"H:i" }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Status:</strong>
+                            {% if gym_class.class_status == 2 %}
+                                <span class="badge bg-secondary">Completed</span>
+                            {% elif gym_class.start_time <= now and gym_class.end_time > now %}
+                                <span class="badge bg-warning">In Progress</span>
+                            {% elif gym_class.available_slots == 0 %}
+                                <span class="badge bg-danger">Full</span>
+                            {% else %}
+                                <span class="badge bg-success">{{ gym_class.available_slots }} Spaces Left</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
         {% empty %}
-            <li>No classes available matching your filters.</li>
+            <p class="text-center">No classes available matching your filters.</p>
         {% endfor %}
-    </ul>
+    </div>
+</div>
 {% endblock %}
