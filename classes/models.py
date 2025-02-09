@@ -2,8 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from facilities.models import Facilitie
+from datetime import timedelta
 
 CLASS_STATUS = ((0, "Confirmed"), (1, "Cancelled"), (2, "Completed"))
+
+REPEAT_CHOICES = (
+    (None, "Does Not Repeat"),
+    ("daily", "Daily"),
+    ("weekly", "Weekly"),
+)
 
 
 class Instructor(models.Model):
@@ -25,6 +32,12 @@ class Class(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     class_status = models.IntegerField(choices=CLASS_STATUS, default=0)
+    repeat_schedule = models.CharField(
+        max_length=10,
+        choices=REPEAT_CHOICES,
+        null=True,
+        blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -41,6 +54,28 @@ class Class(models.Model):
             self.save()
             self.bookings.filter(class_status=0).update(class_status=2)
 
+    def create_next_occurrence(self):
+        """Creates the next occurrence of the class if it is set to repeat."""
+        if self.repeat_schedule == "daily":
+            new_start = self.start_time + timedelta(days=1)
+            new_end = self.end_time + timedelta(days=1)
+        elif self.repeat_schedule == "weekly":
+            new_start = self.start_time + timedelta(weeks=1)
+            new_end = self.end_time + timedelta(weeks=1)
+        else:
+            return None  # No repeat
+
+        # Create new class instance
+        return Class.objects.create(
+            name=self.name,
+            description=self.description,
+            instructor=self.instructor,
+            facility=self.facility,
+            start_time=new_start,
+            end_time=new_end,
+            repeat_schedule=self.repeat_schedule
+        )
+
     def __str__(self):
         return (
             f"{self.name} by {self.instructor.name} at "
@@ -54,7 +89,7 @@ class Class(models.Model):
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     gym_class = models.ForeignKey(
-        Class, on_delete=models.CASCADE, related_name="bookings")   
+        Class, on_delete=models.CASCADE, related_name="bookings")
     class_status = models.IntegerField(choices=CLASS_STATUS, default=0)
     date = models.DateField(auto_now_add=True)
 
