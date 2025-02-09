@@ -81,6 +81,7 @@ def book_class(request, class_id):
                   {"gym_class": gym_class})
 
 
+@login_required
 def booking_confirmation(request, class_id):
     gym_class = get_object_or_404(Class, id=class_id)
     return render(request, "classes/booking_confirmation.html",
