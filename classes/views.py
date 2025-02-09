@@ -31,6 +31,7 @@ def class_list(request):
     return render(request, "classes/class_list.html", {
         "classes": classes,
         "instructors": instructors,
+        "now": now,
     })
 
 

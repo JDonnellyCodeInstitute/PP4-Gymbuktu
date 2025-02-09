@@ -30,7 +30,11 @@
                 <a href="{% url 'class_detail' gym_class.id %}">{{ gym_class.name }}</a> -
                 {{ gym_class.start_time|date:"D, d M Y" }} at {{ gym_class.start_time|time:"H:i" }}
 
-                {% if gym_class.available_slots > 0 %}
+                {% if gym_class.class_status == 2 %}
+                    <span class="badge bg-secondary">Completed</span>
+                {% elif gym_class.start_time <= now and gym_class.end_time > now %}
+                    <span class="badge bg-warning">In Progress</span>
+                {% elif gym_class.available_slots > 0 %}
                     ({{ gym_class.available_slots }} slots left)
                 {% else %}
                     <span class="badge bg-danger">FULL</span>
