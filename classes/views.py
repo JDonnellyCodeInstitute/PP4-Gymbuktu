@@ -3,6 +3,7 @@ from .models import Class, Booking, Instructor
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.contrib import messages
 import datetime
 
 
@@ -128,8 +129,15 @@ def cancel_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
 
     if request.method == "POST":
-        booking.class_status = 1
+        booking.class_status = 1  # Set status to Cancelled
         booking.save()
-        return redirect("class_list")
+
+        messages.success(request, "Booking successfully canceled.")
+
+        # Redirect based on where the user came from
+        if "profile" in request.META.get("HTTP_REFERER", ""):
+            return redirect("profile")  # Send user back to profile
+        else:
+            return redirect("class_list")  # Default to class list
 
     return render(request, "classes/cancel_booking.html", {"booking": booking})
