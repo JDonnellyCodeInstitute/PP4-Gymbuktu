@@ -1,51 +1,96 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Welcome, {{ user.username }}</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-4 shadow">
+                <h2 class="text-center">Welcome back, {{ user.username }}!</h2>
+                <p class="text-center text-muted">
+                    Your profile page shows all your bookings, past and present.
+                </p>
+                <p class="text-center text-muted">
+                    Want to book more classes? <a href="{% url 'class_list' %}" class="fw-bold">Browse here</a>.
+                </p>
 
-    <!-- Current Bookings Section -->
-    <h3>Current Bookings</h3>
-    {% if current_bookings %}
-        <ul class="list-group">
-            {% for booking in current_bookings %}
-                <li class="list-group-item">
-                    {{ booking.class_name }} - {{ booking.date }} at {{ booking.time }}
-                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm float-end">Cancel</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You have no upcoming bookings.</p>
-    {% endif %}
+                <!-- Current Bookings Section -->
+                <h4 class="mt-4">Current Bookings</h4>
+                {% if current_bookings %}
+                    <div class="table-responsive">
+                        <table class="table table-striped text-center">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Class</th>
+                                    <th>Time</th>
+                                    <th>Instructor</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in current_bookings %}
+                                    <tr>
+                                        <td>{{ booking.gym_class.name }}</td>
+                                        <td>{{ booking.gym_class.start_time|time:"H:i" }}</td>
+                                        <td>{{ booking.gym_class.instructor.name }}</td>
+                                        <td>
+                                            <form method="post" action="{% url 'cancel_booking' booking.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No current bookings.</p>
+                {% endif %}
 
-    <!-- Past Bookings Section with Collapsible Accordion -->
-    <h3 class="mt-4">
-        <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#pastBookings">
-            Past Bookings <span class="fw-bold">+</span>
-        </button>
-    </h3>
-    
-    <div id="pastBookings" class="collapse">
-        {% if past_bookings %}
-            <ul class="list-group">
-                {% for booking in past_bookings %}
-                    <li class="list-group-item">
-                        {{ booking.class_name }} - {{ booking.date }} at {{ booking.time }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No past bookings found.</p>
-        {% endif %}
+                <!-- Past Bookings Section -->
+                <h4 class="mt-4">
+                    <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#pastBookings">
+                        Past Bookings <span class="fw-bold">+</span>
+                    </button>
+                </h4>
+                <div id="pastBookings" class="collapse">
+                    {% if past_bookings %}
+                        <div class="table-responsive">
+                            <table class="table text-center">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Time</th>
+                                        <th>Instructor</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in past_bookings %}
+                                        <tr>
+                                            <td>{{ booking.gym_class.name }}</td>
+                                            <td>{{ booking.gym_class.start_time|time:"H:i" }}</td>
+                                            <td>{{ booking.gym_class.instructor.name }}</td>
+                                            <td>{{ booking.gym_class.start_time|date:"D, d M Y" }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No past bookings found.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Quick Links -->
+                <h4 class="mt-4">Quick Links</h4>
+                <div class="d-flex flex-column">
+                    <a href="{% url 'class_list' %}" class="btn btn-outline-primary mb-2">View Classes</a>
+                    <a href="{% url 'feedback' %}" class="btn btn-outline-secondary mb-2">Give Feedback</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Quick Links Section -->
-    <h3 class="mt-4">Quick Links</h3>
-    <ul>
-        <li><a href="{% url 'class_list' %}">View Classes</a></li>
-        <li><a href="{% url 'feedback' %}">Give Feedback</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-    </ul>
 </div>
 {% endblock %}
