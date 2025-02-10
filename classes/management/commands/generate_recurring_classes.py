@@ -12,6 +12,12 @@ class Command(BaseCommand):
         now = timezone.now()
         today = now.date()
 
+        # Only runs on the 1st of the month
+        if today.day != 1:
+            self.stdout.write(self.style.WARNING(
+                "Skipping task - not the 1st of the month"))
+            return
+
         # Number of days ahead to create
         days_ahead = 30
 
