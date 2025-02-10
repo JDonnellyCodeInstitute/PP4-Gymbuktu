@@ -7,7 +7,7 @@
                 <h2 class="mb-3 text-primary">Booking Confirmation</h2>
                 
                 {% if error %}
-                    <p class="text-danger fw-bold">{{ error }}</p>
+                    <div class="alert alert-danger">{{ error }}</div>
                 {% else %}
                     <p class="lead text-success">You have successfully booked <strong>{{ gym_class.name }}</strong> on 
                         <strong>{{ gym_class.start_time|date:"D, d M Y" }}</strong> at 

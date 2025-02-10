@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Class, Booking, Instructor
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 import datetime
 
 
@@ -98,8 +99,18 @@ def book_class(request, class_id):
         })
 
     if request.method == "POST":
-        Booking.objects.create(user=request.user, gym_class=gym_class)
-        return redirect("booking_confirmation", class_id=gym_class.id)
+        try:
+            # Try creating a new booking
+            booking = Booking(user=request.user, gym_class=gym_class)
+            booking.full_clean()  # Runs model validations before saving
+            booking.save()
+            return redirect("booking_confirmation", class_id=gym_class.id)
+
+        except ValidationError as e:
+            return render(request, "classes/booking_confirmation.html", {
+                "gym_class": gym_class,
+                "error": e.messages[0]  # Extracts error message
+            })
 
     return render(request, "classes/booking_confirmation.html",
                   {"gym_class": gym_class})
