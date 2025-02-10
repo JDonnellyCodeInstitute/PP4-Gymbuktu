@@ -3,12 +3,14 @@ from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth import authenticate
 
+
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
 
 class CustomLoginForm(AuthenticationForm):
     def clean(self):
@@ -20,6 +22,7 @@ class CustomLoginForm(AuthenticationForm):
             user = authenticate(username=username, password=password)
             if user is not None:
                 if not user.is_active:
-                    raise forms.ValidationError("Please verify your email before logging in.")
-        
+                    raise forms.ValidationError(
+                        "Please verify your email before logging in.")
+
         return cleaned_data
