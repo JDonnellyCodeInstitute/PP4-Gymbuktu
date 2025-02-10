@@ -5,6 +5,21 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 import datetime
+from django.contrib.auth.decorators import user_passes_test
+
+# Staff specific views
+
+
+def staff_required(user):
+    """Restrict view access to staff and superusers."""
+    return user.is_staff or user.is_superuser
+
+
+@user_passes_test(staff_required)
+def manage_classes(request):
+    """Show all classes and allow staff to add/edit/delete."""
+    classes = Class.objects.all()
+    return render(request, "classes/manage_classes.html", {"classes": classes})
 
 
 def class_list(request):
