@@ -22,12 +22,15 @@ class Command(BaseCommand):
 
         for gym_class in recurring_classes:
             for day in range(1, days_ahead + 1):
-                new_start_time = gym_class.start_time + timedelta(days=day * 7)
-                new_end_time = gym_class.end_time + timedelta(days=day * 7)
+                new_start_time = gym_class.start_time + timedelta(days=day)
+                new_end_time = gym_class.end_time + timedelta(days=day)
 
                 # Checks if class already exists on date
                 if not Class.objects.filter(
-                        start_time=new_start_time).exists():
+                    start_time=new_start_time,
+                    instructor=gym_class.instructor,
+                    facility=gym_class.facility,
+                ).exists():
                     try:
                         Class.objects.create(
                             name=gym_class.name,
