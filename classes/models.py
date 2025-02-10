@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from facilities.models import Facilitie
 from datetime import timedelta
+from django.core.exceptions import ValidationError
 
 CLASS_STATUS = ((0, "Confirmed"), (1, "Cancelled"), (2, "Completed"))
 
@@ -42,8 +43,8 @@ class Class(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def available_slots(self):
-        """Returns the number of available slots
-        based on the facility's max capacity."""
+        """Returns the number of available
+        slots based on the facility's max capacity."""
         booked_slots = self.bookings.filter(class_status=0).count()
         return max(self.facility.max_capacity - booked_slots, 0)
 
@@ -76,6 +77,28 @@ class Class(models.Model):
             repeat_schedule=self.repeat_schedule
         )
 
+    def clean(self):
+        """Check for instructor and facility conflicts before saving."""
+        overlapping_classes = Class.objects.filter(
+            start_time__lt=self.end_time,
+            end_time__gt=self.start_time
+        ).exclude(id=self.id)  # Exclude self to allow updates
+
+        # Check instructor conflict
+        if overlapping_classes.filter(instructor=self.instructor).exists():
+            raise ValidationError(
+                f"{self.instructor.name} is teaching a class at this time.")
+
+        # Check facility conflict
+        if overlapping_classes.filter(facility=self.facility).exists():
+            raise ValidationError(
+                f"{self.facility.name} is hosting a class at this time.")
+
+    def save(self, *args, **kwargs):
+        """Run validation before saving."""
+        self.clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return (
             f"{self.name} by {self.instructor.name} at "
@@ -92,6 +115,24 @@ class Booking(models.Model):
         Class, on_delete=models.CASCADE, related_name="bookings")
     class_status = models.IntegerField(choices=CLASS_STATUS, default=0)
     date = models.DateField(auto_now_add=True)
+
+    def clean(self):
+        """Ensure user is not double-booking overlapping classes."""
+        overlapping_bookings = Booking.objects.filter(
+            user=self.user,
+            gym_class__start_time__lt=self.gym_class.end_time,
+            gym_class__end_time__gt=self.gym_class.start_time,
+            class_status=0
+        ).exclude(id=self.id)  # Exclude self for updates
+
+        if overlapping_bookings.exists():
+            raise ValidationError(
+                "You are already booked for another class at this time.")
+
+    def save(self, *args, **kwargs):
+        """Run validation before saving."""
+        self.clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return (
