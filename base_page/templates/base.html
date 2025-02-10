@@ -68,6 +68,18 @@
             </ul>
         </div>
     </nav>
+    
+    <!-- Alerts -->
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <!-- Main Content -->
     <main>
@@ -83,14 +95,14 @@
                 <div class="col-lg-4 text-lg-start text-center footer-contact large-screen">
                     Email: gymbuktu@gmail.com | Phone: +44 9876543210
                 </div>
-    
+
                 <!-- Center: Social Media Icons -->
                 <div class="col-lg-4 text-center footer-social">
                     <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
                 </div>
-    
+
                 <!-- Right: Copyright & Gym Rules -->
                 <div class="col-lg-4 text-lg-end text-center footer-right large-screen">
                     &copy; GymBukTu Limited 2025 | <a href="{% url 'gym_rules' %}">Gym Rules</a>
