@@ -39,6 +39,19 @@ def add_class(request):
         "form": form, "title": "Add Class"})
 
 
+@user_passes_test(staff_required)
+def edit_class(request, class_id):
+    """Allow staff to edit an existing class."""
+    gym_class = get_object_or_404(Class, id=class_id)
+    if request.method == "POST":
+        form = ClassForm(request.POST, instance=gym_class)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Class updated successfully!")
+            return redirect("manage_classes")
+    else:
+        form = ClassForm(instance=gym_class)
+
 # User centric views
 
 
