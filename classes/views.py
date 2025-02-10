@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Class, Booking, Instructor
+from .forms import ClassForm
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.exceptions import ValidationError
@@ -20,6 +21,25 @@ def manage_classes(request):
     """Show all classes and allow staff to add/edit/delete."""
     classes = Class.objects.all()
     return render(request, "classes/manage_classes.html", {"classes": classes})
+
+
+@user_passes_test(staff_required)
+def add_class(request):
+    """Allow staff to add a new class."""
+    if request.method == "POST":
+        form = ClassForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Class added successfully!")
+            return redirect("manage_classes")
+    else:
+        form = ClassForm()
+
+    return render(request, "classes/class_form.html", {
+        "form": form, "title": "Add Class"})
+
+
+# User centric views
 
 
 def class_list(request):
