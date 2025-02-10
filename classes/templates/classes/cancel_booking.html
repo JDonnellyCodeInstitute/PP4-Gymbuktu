@@ -11,7 +11,8 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger w-100">Cancel Booking</button>
                 </form>
-                <a href="{% url 'class_list' %}" class="btn btn-secondary w-100 mt-3">Back to Classes</a>
+                <a href="{% url 'profile' %}" class="btn btn-secondary">Return to Profile</a>
+                <a href="{% url 'class_list' %}" class="btn btn-outline-primary">Back to Classes</a>
             </div>
         </div>
     </div>
