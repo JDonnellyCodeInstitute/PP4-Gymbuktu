@@ -39,7 +39,7 @@
             <thead class="table-primary">
                 <tr>
                     <th colspan="5" class="fs-5 py-2">
-                        <strong>{% if request.GET.date %} {{ request.GET.date }} {% else %} Today {% endif %}</strong>
+                        <strong>{{ formatted_date }}</strong>
                     </th>
                 </tr>
                 <tr class="table-dark">
@@ -81,7 +81,7 @@
     <!-- Mobile Card View -->
     <div class="row d-md-none">
         <div class="col-12 text-center bg-primary text-white py-2 fs-5 rounded-top">
-            <strong>{% if request.GET.date %} {{ request.GET.date }} {% else %} Today {% endif %}</strong>
+            <strong>{{ formatted_date }}</strong>
         </div>
         {% for gym_class in classes %}
             <div class="col-12 mb-3">

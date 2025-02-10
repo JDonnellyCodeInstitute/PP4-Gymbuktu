@@ -2,15 +2,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Class, Booking, Instructor
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+import datetime
 
 
 def class_list(request):
     """Display all upcoming classes with optional filters."""
     # Current time
     now = timezone.now()
+    today = now.date()
+    tomorrow = today + datetime.timedelta(days=1)
 
     # Base querysets
-    classes = Class.objects.filter(end_time__gt=now)
+    classes = Class.objects.filter(start_time__date=today)
     instructors = Instructor.objects.all()
 
     # Get query parameters
@@ -19,6 +22,25 @@ def class_list(request):
     instructor_id = request.GET.get("instructor", "").strip()
 
     # Apply filters
+    # Convert date_filter to valid date format
+    selected_date = today  # Default to today
+    formatted_date = "Today"  # Default display
+
+    if date_filter:
+        try:
+            selected_date = datetime.datetime.strptime(
+                date_filter, "%Y-%m-%d").date()
+            if selected_date == today:
+                formatted_date = "Today"
+            elif selected_date == tomorrow:
+                formatted_date = "Tomorrow"
+            else:
+                formatted_date = selected_date.strftime("%A, %d %B %Y")
+            classes = Class.objects.filter(start_time__date=selected_date)
+        except ValueError:
+            selected_date = today
+            formatted_date = "Today"
+
     if class_type:
         classes = classes.filter(name__icontains=class_type)
 
@@ -32,6 +54,8 @@ def class_list(request):
         "classes": classes,
         "instructors": instructors,
         "now": now,
+        "selected_date": selected_date,
+        "formatted_date": formatted_date,
     })
 
 
