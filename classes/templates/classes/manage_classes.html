@@ -2,6 +2,17 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Manage Classes</h2>
+
+    <!-- Date Picker -->
+    <form method="GET" class="mb-3">
+        <label for="date" class="form-label">Select Date:</label>
+        <input type="date" id="date" name="date" class="form-control d-inline w-auto"
+               value="{{ selected_date|date:'Y-m-d' }}" onchange="this.form.submit()">
+    </form>
+
+    <!-- Show selected date -->
+    <h4 class="mb-3">Classes on {{ selected_date|date:"l, d M Y" }}</h4>
+
     <a href="{% url 'add_class' %}" class="btn btn-success mb-3">+ Add New Class</a>
 
     <table class="table table-striped">

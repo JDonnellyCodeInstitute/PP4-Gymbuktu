@@ -19,8 +19,27 @@ def staff_required(user):
 @user_passes_test(staff_required)
 def manage_classes(request):
     """Show all classes and allow staff to add/edit/delete."""
-    classes = Class.objects.all()
-    return render(request, "classes/manage_classes.html", {"classes": classes})
+    today = timezone.now().date()
+    selected_date = request.GET.get("date")
+
+    # Default to today if no date provided
+    if not selected_date:
+        selected_date = today
+    else:
+        # Ensure date is properly formatted
+        try:
+            selected_date = timezone.datetime.strptime(
+                selected_date, "%Y-%m-%d"
+            ).date()
+        except ValueError:
+            selected_date = today  # Default to today if invalid
+
+    classes = Class.objects.filter(start_time__date=selected_date)
+
+    return render(request, "classes/manage_classes.html", {
+        "classes": classes,
+        "selected_date": selected_date,
+    })
 
 
 @user_passes_test(staff_required)
