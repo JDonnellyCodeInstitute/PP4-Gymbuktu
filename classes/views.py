@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Class, Booking, Instructor
+from .models import Class, Booking, Instructor, User
 from .forms import ClassForm
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -7,6 +7,8 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 import datetime
 from django.contrib.auth.decorators import user_passes_test
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Staff specific views
 
@@ -77,15 +79,45 @@ def edit_class(request, class_id):
 
 @user_passes_test(staff_required)
 def delete_class(request, class_id):
-    """Allow staff to delete a class."""
+    """Allow staff to delete a class and notify users with bookings."""
     gym_class = get_object_or_404(Class, id=class_id)
+
+    # Fetch users who have booked this class
+    booked_users = User.objects.filter(
+        booking__gym_class=gym_class, booking__class_status=0).distinct()
+
     if request.method == "POST":
+        # Send email notifications before deleting the class
+        subject = f"GymBukTu Class Cancellation: {gym_class.name}"
+        message = (
+            f"Dear Member,\n\n"
+            f"Regretfully, your booked class '{gym_class.name}' on "
+            f"{gym_class.start_time.strftime('%A, %d %B %Y at %H:%M')} "
+            f"has been cancelled.\n\n"
+            f"We apologize for any inconvenience caused.\n\n"
+            f"Best regards,\nThe GymBukTu Team"
+        )
+
+        recipient_list = [user.email for user in booked_users if user.email]
+
+        if recipient_list:
+            send_mail(
+                subject, message,
+                settings.DEFAULT_FROM_EMAIL,
+                recipient_list
+            )
+
+        # Delete the class
         gym_class.delete()
-        messages.success(request, "Class deleted successfully!")
+
+        messages.success(
+            request,
+            "Class deleted successfully! Affected members have been notified."
+        )
         return redirect("manage_classes")
 
-    return render(request, "classes/confirm_delete.html", {
-        "gym_class": gym_class})
+    return render(
+        request, "classes/confirm_delete.html", {"gym_class": gym_class})
 
 # User centric views
 

@@ -3,6 +3,7 @@
 <div class="container mt-4">
     <h2>Delete Class</h2>
     <p>Are you sure you want to delete <strong>{{ gym_class.name }}</strong>?</p>
+    <p><strong>All booked members will be notified.</strong></p>
     
     <form method="POST">
         {% csrf_token %}
