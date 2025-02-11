@@ -32,7 +32,7 @@
             <!-- Authentication Links -->
             <div class="auth-links d-none d-lg-block">
                 {% if user.is_authenticated %}
-                    <span class="greeting">Hello, {{ user.username }}</span>
+                    <span class="greeting">Hello, {{ user.username }} |</span>
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                 {% else %}
                     <a href="{% url 'login' %}">Log In</a> <span>|</span> <a href="{% url 'signup' %}">Sign Up</a>
