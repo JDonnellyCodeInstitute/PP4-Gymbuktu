@@ -52,6 +52,22 @@ def edit_class(request, class_id):
     else:
         form = ClassForm(instance=gym_class)
 
+    return render(request, "classes/class_form.html", {
+        "form": form, "title": "Edit Class"})
+
+
+@user_passes_test(staff_required)
+def delete_class(request, class_id):
+    """Allow staff to delete a class."""
+    gym_class = get_object_or_404(Class, id=class_id)
+    if request.method == "POST":
+        gym_class.delete()
+        messages.success(request, "Class deleted successfully!")
+        return redirect("manage_classes")
+
+    return render(request, "classes/confirm_delete.html", {
+        "gym_class": gym_class})
+
 # User centric views
 
 
