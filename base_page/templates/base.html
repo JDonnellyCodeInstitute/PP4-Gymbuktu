@@ -46,7 +46,11 @@
         <!-- Large Screen View: Four Square Buttons -->
         <div class="nav-container d-none d-lg-flex">
             <a href="{% url 'home' %}" class="nav-box">Home</a>
-            <a href="{% url 'class_list' %}" class="nav-box">Classes</a>
+            {% if user.is_staff %}
+                <a href="{% url 'manage_classes' %}" class="nav-box">Manage Classes</a>
+            {% else %}
+                <a href="{% url 'class_list' %}" class="nav-box">Classes</a>
+            {% endif %}
             <a href="{% url 'feedback' %}" class="nav-box">Feedback</a>
             <a href="{% url 'profile' %}" class="nav-box">Profile</a>
         </div>
@@ -55,15 +59,19 @@
         <div class="collapse navbar-collapse d-lg-none" id="navbarNav">
             <ul class="navbar-nav text-center">
                 <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                <li><a href="{% url 'class_list' %}" class="nav-link">Classes</a></li>
+                {% if user.is_staff %}
+                    <li><a href="{% url 'manage_classes' %}" class="nav-link">Manage Classes</a></li>
+                {% else %}
+                    <li><a href="{% url 'class_list' %}" class="nav-link">Classes</a></li>
+                {% endif %}
                 <li><a href="{% url 'feedback' %}" class="nav-link">Feedback</a></li>
                 <li><a href="{% url 'profile' %}" class="nav-link">Profile</a></li>
                 <li><a href="{% url 'gym_rules' %}" class="nav-link">Gym Rules</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}" class="nav-link">Log Out</a></li>
+                    <li><a href="{% url 'logout' %}" class="nav-link">Log Out</a></li>
                 {% else %}
-                <li><a href="{% url 'login' %}" class="nav-link">Log In</a></li>
-                <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
+                    <li><a href="{% url 'login' %}" class="nav-link">Log In</a></li>
+                    <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
                 {% endif %}
             </ul>
         </div>
