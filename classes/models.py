@@ -79,6 +79,10 @@ class Class(models.Model):
 
     def clean(self):
         """Check for instructor and facility conflicts before saving."""
+        # Ensure start time is before end time
+        if self.start_time >= self.end_time:
+            raise ValidationError("The class start must be before the end.")
+
         overlapping_classes = Class.objects.filter(
             start_time__lt=self.end_time,
             end_time__gt=self.start_time
