@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 import dj_database_url
 if os.path.isfile('env.py'):
     import env
@@ -42,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'classes',
     'facilities',
     'feedback',
@@ -146,8 +151,10 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTOMATED EMAIL FUNCTIONALITY
+
 # Sends 'emails' to console
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 # For real emails
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
@@ -160,3 +167,15 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 SESSION_COOKIE_AGE = 900
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_SAVE_EVERY_REQUEST = True
+
+# Cloudinary
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+
+# Cloudinary Configuration
+cloudinary.config(cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+                  api_key=os.environ.get("CLOUDINARY_API_KEY"),
+                  api_secret=os.environ.get("CLOUDINARY_API_SECRET"))
+
+# Static and Media Files
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
