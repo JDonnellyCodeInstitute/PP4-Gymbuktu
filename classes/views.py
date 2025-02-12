@@ -176,6 +176,7 @@ def class_list(request):
     })
 
 
+@login_required
 def class_detail(request, class_id):
     gym_class = get_object_or_404(Class, id=class_id)
     now = timezone.now()
