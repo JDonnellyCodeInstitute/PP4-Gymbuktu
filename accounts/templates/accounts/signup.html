@@ -2,20 +2,37 @@
 
 {% block title %}Sign Up{% endblock %}
 
-{% block bg_image %}{% endblock %} <!-- Unique background image can go here -->
-
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h2 class="text-center mb-4">Sign Up</h2>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100">Register</button>
-        </form>
-        <div class="text-center mt-3">
-            <p>Already signed up?</p>
-            <a href="{% url 'login' %}" class="btn btn-link">Login</a>
+<div class="container d-flex justify-content-center align-items-center pt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">Sign Up</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Username</label>
+                    {{ form.username }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label">Password</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_password2" class="form-label">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Already signed up?</p>
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary">Login</a>
+            </div>
         </div>
     </div>
 </div>
