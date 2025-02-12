@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Thank You for Your Feedback!</h2>
-  <p>We appreciate your input and will use it to improve our services.</p>
-  <a href="{% url 'profile' %}">Return to Profile</a>
+<div class="container text-center mt-5">
+    <h2 class="text-success">Thank You for Your Feedback! 🎉</h2>
+    <p class="lead">We appreciate your input and will use it to improve our services.</p>
+    <a href="{% url 'profile' %}" class="btn btn-outline-primary mt-3">Return to Profile</a>
+</div>
 {% endblock %}

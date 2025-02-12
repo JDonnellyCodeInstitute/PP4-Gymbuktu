@@ -1,19 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Submit Your Feedback</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Submit Your Feedback</h2>
 
-  <h3>Your Previous Feedback</h3>
-  <ul>
-    {% for feedback in feedback_entries %}
-      <li>{{ feedback.timestamp }}: {{ feedback.content }}</li>
-    {% empty %}
-      <li>No feedback submitted yet.</li>
-    {% endfor %}
-  </ul>
+    <div class="card p-4 shadow-sm">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="feedbackContent" class="form-label">Your Feedback</label>
+                {{ form.content }}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+    </div>
+
+    <!-- Previous Feedback Section -->
+    <h3 class="mt-5">Your Previous Feedback</h3>
+    <div class="list-group">
+        {% for feedback in feedback_entries %}
+            <div class="list-group-item">
+                <strong>{{ feedback.timestamp|date:"M d, Y H:i" }}</strong>
+                <p class="mb-0">{{ feedback.content }}</p>
+            </div>
+        {% empty %}
+            <p class="text-muted">No feedback submitted yet.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
