@@ -2,11 +2,14 @@
 
 {% block title %}Logout{% endblock %}
 
-{% block bg_image %}{% endblock %} <!-- Unique background image can go here -->
-
 {% block content %}
-<div class="text-center mt-5">
-    <h2>You have been logged out.</h2>
-    <a href="{% url 'login' %}" class="btn btn-primary mt-3">Login Again</a>
+<div class="container d-flex justify-content-center align-items-center pt-5">
+    <div class="col-md-6 col-lg-5 text-center">
+        <div class="card shadow p-4">
+            <h2 class="text-success">You have been logged out.</h2>
+            <p class="lead">We hope to see you again soon!</p>
+            <a href="{% url 'login' %}" class="btn btn-primary w-100">Login Again</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
