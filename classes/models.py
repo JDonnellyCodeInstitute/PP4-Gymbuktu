@@ -39,21 +39,25 @@ class Class(models.Model):
         null=True,
         blank=True
     )
+    attendees = models.ManyToManyField(User, related_name="attended_classes", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def available_slots(self):
-        """Returns the number of available
-        slots based on the facility's max capacity."""
+        """Returns the number of available slots based on the facility's max capacity."""
         booked_slots = self.bookings.filter(class_status=0).count()
         return max(self.facility.max_capacity - booked_slots, 0)
 
     def mark_completed(self):
-        """Marks the class as completed if it has ended."""
+        """Marks the class as completed if it has ended and updates attendance."""
         if self.end_time < timezone.now():
             self.class_status = 2
             self.save()
             self.bookings.filter(class_status=0).update(class_status=2)
+
+            # Automatically update attendees list from bookings
+            attended_users = self.bookings.filter(attended=True).values_list("user", flat=True)
+            self.attendees.set(attended_users)
 
     def create_next_occurrence(self):
         """Creates the next occurrence of the class if it is set to repeat."""
@@ -118,6 +122,7 @@ class Booking(models.Model):
     gym_class = models.ForeignKey(
         Class, on_delete=models.CASCADE, related_name="bookings")
     class_status = models.IntegerField(choices=CLASS_STATUS, default=0)
+    attended = models.BooleanField(default=False)
     date = models.DateField(auto_now_add=True)
 
     def clean(self):
