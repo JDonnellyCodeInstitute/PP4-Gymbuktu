@@ -45,6 +45,34 @@ def manage_classes(request):
 
 
 @user_passes_test(staff_required)
+def manage_attendance(request, class_id):
+    """Allow staff to view and mark attendance for a class."""
+    gym_class = get_object_or_404(Class, id=class_id)
+    bookings = Booking.objects.filter(gym_class=gym_class, class_status=0)
+
+    if request.method == "POST":
+        attendees = []
+        for booking in bookings:
+            attended = request.POST.get(f"attended_{booking.id}") == "on"
+            booking.attended = attended
+            booking.save()
+
+            if attended:
+                attendees.append(booking.user)
+
+        # Update the class's attendees list
+        gym_class.attendees.set(attendees)
+
+        messages.success(request, "Attendance updated successfully!")
+        return redirect("manage_classes")
+
+    return render(request, "classes/manage_attendance.html", {
+        "gym_class": gym_class,
+        "bookings": bookings
+    })
+
+
+@user_passes_test(staff_required)
 def add_class(request):
     """Allow staff to add a new class."""
     if request.method == "POST":
