@@ -4,10 +4,9 @@
     <h2 class="mb-4 text-center">Manage Attendance for {{ gym_class.name }}</h2>
 
     <!-- Attendance Summary -->
-    {% if bookings %}
+    {% if total_bookings > 0 %}
     <div class="alert alert-info text-center">
-        {{ bookings|dictsort:"attended"|yesno:"Attended Members,No Attendees Yet" }}: 
-        {{ bookings|dictsort:"attended"|length }}/{{ bookings|length }}
+        Attended Members: {{ attended_count }}/{{ total_bookings }}
     </div>
     {% endif %}
 

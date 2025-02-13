@@ -38,8 +38,20 @@ def manage_classes(request):
 
     classes = Class.objects.filter(start_time__date=selected_date)
 
+    # For displaying attendance in the manage_class table
+    class_data = []
+    for gym_class in classes:
+        total_bookings = gym_class.bookings.count()
+        attended_count = gym_class.bookings.filter(attended=True).count()
+        class_data.append({
+            "gym_class": gym_class,
+            "total_bookings": total_bookings,
+            "attended_count": attended_count,
+        })
+
     return render(request, "classes/manage_classes.html", {
         "classes": classes,
+        "class_data": class_data,
         "selected_date": selected_date,
     })
 
@@ -49,6 +61,10 @@ def manage_attendance(request, class_id):
     """Allow staff to view and mark attendance for a class."""
     gym_class = get_object_or_404(Class, id=class_id)
     bookings = Booking.objects.filter(gym_class=gym_class, class_status=0)
+
+    # Count how many attendees have been marked as attended
+    attended_count = bookings.filter(attended=True).count()
+    total_bookings = bookings.count()
 
     if request.method == "POST":
         attendees = []
@@ -64,11 +80,13 @@ def manage_attendance(request, class_id):
         gym_class.attendees.set(attendees)
 
         messages.success(request, "Attendance updated successfully!")
-        return redirect("manage_classes")
+        return redirect("manage_attendance", class_id=class_id)
 
     return render(request, "classes/manage_attendance.html", {
         "gym_class": gym_class,
-        "bookings": bookings
+        "bookings": bookings,
+        "attended_count": attended_count,
+        "total_bookings": total_bookings,
     })
 
 
