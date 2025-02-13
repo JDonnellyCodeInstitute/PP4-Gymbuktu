@@ -8,16 +8,24 @@ urlpatterns = [
     path(
         "cancel/<int:booking_id>/",
         views.cancel_booking,
-        name="cancel_booking"),
+        name="cancel_booking"
+    ),
     path(
         "<int:class_id>/confirmation/",
         views.booking_confirmation,
-        name="booking_confirmation"),
+        name="booking_confirmation"
+    ),
     path("manage/", views.manage_classes, name="manage_classes"),
     path("manage/add/", views.add_class, name="add_class"),
     path("manage/edit/<int:class_id>/", views.edit_class, name="edit_class"),
     path(
         "manage/delete/<int:class_id>/",
         views.delete_class,
-        name="delete_class"),
+        name="delete_class"
+    ),
+    path(
+        "manage/attendance/<int:class_id>/",
+        views.manage_attendance,
+        name="manage_attendance"
+    ),
 ]

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Manage Attendance for {{ gym_class.name }}</h2>
+
+    <!-- Attendance Summary -->
+    {% if bookings %}
+    <div class="alert alert-info text-center">
+        {{ bookings|dictsort:"attended"|yesno:"Attended Members,No Attendees Yet" }}: 
+        {{ bookings|dictsort:"attended"|length }}/{{ bookings|length }}
+    </div>
+    {% endif %}
+
+    <form method="post" class="card shadow-sm p-4">
+        {% csrf_token %}
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Member</th>
+                        <th class="text-center">Attended</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr class="{% if booking.attended %}table-success{% endif %}">
+                        <td>{{ booking.user.username }}</td>
+                        <td class="text-center">
+                            <input type="checkbox" name="attended_{{ booking.id }}" {% if booking.attended %}checked{% endif %} class="form-check-input">
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">No bookings for this class.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Update Attendance</button>
+            <a href="{% url 'manage_classes' %}" class="btn btn-secondary">Back to Classes</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
