@@ -6,13 +6,18 @@ from .forms import SignUpForm, CustomLoginForm
 from classes.models import Booking, User
 from django.core.mail import send_mail
 from .models import EmailVerification
+from django.contrib.auth.password_validation import (
+    validate_password,
+    get_default_password_validators
+)
+from django.core.exceptions import ValidationError
 
 
 def signup(request):
     """Handles user registration and prevents duplicate signups."""
     if request.method == "POST":
         form = SignUpForm(request.POST)
-
+        password = request.POST.get("password1")
         username = request.POST.get("username")
 
         # Check if a user with this username already exists
@@ -21,6 +26,20 @@ def signup(request):
                 request,
                 "This username is already taken. "
                 "Please choose another or log in."
+            )
+            return render(request, "accounts/signup.html", {"form": form})
+
+        # Check if the password meets Django's password policy
+        try:
+            validate_password(
+                password, user=None,
+                password_validators=get_default_password_validators()
+            )
+        except ValidationError as e:
+            messages.error(
+                request,
+                f"Your password does not meet the security requirements:\n"
+                f"{' '.join(e.messages)}"
             )
             return render(request, "accounts/signup.html", {"form": form})
 
