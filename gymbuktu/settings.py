@@ -16,6 +16,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
+from django.contrib.messages import constants as messages
 if os.path.isfile('env.py'):
     import env
 
@@ -179,3 +180,14 @@ cloudinary.config(cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
 # Static and Media Files
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Error handling
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+
+MESSAGE_TAGS = {
+    messages.DEBUG: "secondary",
+    messages.INFO: "info",
+    messages.SUCCESS: "success",
+    messages.WARNING: "warning",
+    messages.ERROR: "danger",  # ✅ Ensures errors appear correctly in Bootstrap
+}
