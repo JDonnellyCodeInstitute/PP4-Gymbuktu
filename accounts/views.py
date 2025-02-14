@@ -3,14 +3,27 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import SignUpForm, CustomLoginForm
-from classes.models import Booking
+from classes.models import Booking, User
 from django.core.mail import send_mail
 from .models import EmailVerification
 
 
 def signup(request):
-    if request.method == 'POST':
+    """Handles user registration and prevents duplicate signups."""
+    if request.method == "POST":
         form = SignUpForm(request.POST)
+
+        username = request.POST.get("username")
+
+        # Check if a user with this username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(
+                request,
+                "This username is already taken. "
+                "Please choose another or log in."
+            )
+            return render(request, "accounts/signup.html", {"form": form})
+
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False  # Prevent login until verification
@@ -21,33 +34,25 @@ def signup(request):
 
             # Get site domain so verification works in prod or dev
             current_site = request.get_host()
-            verification_link = f"http://{
-                current_site}/accounts/verify/{token_obj.token}/"
-
-            # Email Data
-            email_data = {
-                "to_email": user.email,
-                "username": user.username,
-                "verification_link": verification_link
-            }
+            verification_link = (
+                f"http://{current_site}/accounts/verify/{token_obj.token}/"
+            )
 
             # Send email
             send_mail(
                 "Verify Your Account",
-                f"""
-                Click to verify your account:
-                {email_data['verification_link']}""",
+                f"Click to verify your account:\n{verification_link}",
                 "gymbuktu@gmail.com",
                 [user.email],
                 fail_silently=False,
             )
 
-            return redirect("check_email")  # Redirect to check your email page
+            return redirect("check_email")
 
     else:
         form = SignUpForm()
 
-    return render(request, 'accounts/signup.html', {'form': form})
+    return render(request, "accounts/signup.html", {"form": form})
 
 
 def login_view(request):
