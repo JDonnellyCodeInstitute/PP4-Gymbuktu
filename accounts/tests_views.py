@@ -42,3 +42,19 @@ class TestSignupView(TestCase):
         # Verification token should be created
         self.assertTrue(EmailVerification.objects.filter(
             user__username="NewUser").exists())
+
+    def test_signup_fails_if_username_taken(self):
+        """Test that signing up with an existing username shows an error."""
+        response = self.client.post(self.signup_url, {
+            "username": "ExistingUser",  # Username already taken in setup
+            "email": "newuser@gmail.com",
+            "password1": "StrongPassword1!",
+            "password2": "StrongPassword1!",
+        })
+
+        # Should stay on signup page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/signup.html")
+
+        # Error message should be in the response
+        self.assertContains(response, "This username is already taken.")
