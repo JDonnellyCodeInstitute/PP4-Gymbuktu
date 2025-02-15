@@ -67,3 +67,14 @@ class TestSignUpForm(TestCase):
             'password2': 'testPassword1!'
         })
         self.assertFalse(signup_form.is_valid())
+
+    def test_password_too_short(self):
+        signup_form = SignUpForm({
+            'username': 'TestUser',
+            'email': 'gymbuktu@gmail.com',
+            'password1': 'short1!',
+            'password2': 'short1!'
+        })
+        self.assertFalse(signup_form.is_valid())
+
+    
