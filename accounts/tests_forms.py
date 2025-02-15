@@ -77,4 +77,11 @@ class TestSignUpForm(TestCase):
         })
         self.assertFalse(signup_form.is_valid())
 
-    
+    def test_invalid_email(self):
+        signup_form = SignUpForm({
+            'username': 'TestUser',
+            'email': 'invalid-email',
+            'password1': 'testPassword1!',
+            'password2': 'testPassword1!'
+        })
+        self.assertFalse(signup_form.is_valid())
