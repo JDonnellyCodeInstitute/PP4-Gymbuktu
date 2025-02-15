@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -34,7 +35,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -89,16 +89,12 @@ WSGI_APPLICATION = 'gymbuktu.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
+if 'test' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeinstitute-ide.net/",
@@ -164,7 +160,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTOMATED EMAIL FUNCTIONALITY
 
-# Sends 'emails' to console
+# Sends 'emails' to console (for testing)
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # For real emails
@@ -200,5 +196,5 @@ MESSAGE_TAGS = {
     messages.INFO: "info",
     messages.SUCCESS: "success",
     messages.WARNING: "warning",
-    messages.ERROR: "danger",  # ✅ Ensures errors appear correctly in Bootstrap
+    messages.ERROR: "danger",
 }
