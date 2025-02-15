@@ -98,3 +98,22 @@ class TestSignupView(TestCase):
 
         # User should NOT be created
         self.assertFalse(User.objects.filter(username="NewUser").exists())
+
+    def test_signup_fails_if_missing_fields(self):
+        """Test that signup fails when required fields are missing."""
+        response = self.client.post(self.signup_url, {
+            "username": "",
+            "email": "newuser@gmail.com",
+            "password1": "StrongPassword1!",
+            "password2": "StrongPassword1!",
+        })
+
+        # Should stay on signup page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/signup.html")
+
+        # Error message should be in the response
+        self.assertContains(response, "This field is required.")
+
+        # User should NOT be created
+        self.assertFalse(User.objects.filter(email="newuser@gmail.com").exists())
