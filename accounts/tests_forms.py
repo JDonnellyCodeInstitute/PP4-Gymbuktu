@@ -6,6 +6,7 @@ from .forms import SignUpForm, CustomLoginForm
 class TestSignUpForm(TestCase):
 
     def test_form_is_valid(self):
+        "Test a valid sign up"
         signup_form = SignUpForm({
             'username': 'TestUser',
             'email': 'gymbuktu@gmail.com',
@@ -15,6 +16,7 @@ class TestSignUpForm(TestCase):
         self.assertTrue(signup_form.is_valid())
 
     def test_username_is_required(self):
+        "Test that signup is invalid without a username"
         signup_form = SignUpForm({
             'username': '',
             'email': 'gymbuktu@gmail.com',
@@ -24,6 +26,7 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_email_is_required(self):
+        "Test that signup is invalid without an email"
         signup_form = SignUpForm({
             'username': 'TestUser',
             'email': '',
@@ -33,6 +36,7 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_password1_is_required(self):
+        "Test that signup is invalid without a password1"
         signup_form = SignUpForm({
             'username': 'TestUser',
             'email': 'gymbuktu@gmail.com',
@@ -42,6 +46,7 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_password2_is_required(self):
+        "Test that signup is invalid without a password2"
         signup_form = SignUpForm({
             'username': 'TestUser',
             'email': 'gymbuktu@gmail.com',
@@ -51,6 +56,7 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_passwords_must_match(self):
+        "Test that signup is invalid without both passwords matching"
         signup_form = SignUpForm({
             'username': 'TestUser',
             'email': 'gymbuktu@gmail.com',
@@ -60,6 +66,7 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_username_too_long(self):
+        "Test that signup is invalid if the username breaches the length limit"
         long_username = 'T' * 151
         signup_form = SignUpForm({
             'username': long_username,
@@ -70,6 +77,7 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_password_too_short(self):
+        "Test that signup is invalid if the password is too short"
         signup_form = SignUpForm({
             'username': 'TestUser',
             'email': 'gymbuktu@gmail.com',
@@ -79,6 +87,7 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_invalid_email(self):
+        "Test that signup is invalid without a proper email"
         signup_form = SignUpForm({
             'username': 'TestUser',
             'email': 'invalid-email',
@@ -88,6 +97,8 @@ class TestSignUpForm(TestCase):
         self.assertFalse(signup_form.is_valid())
 
     def test_duplicate_email_allowed(self):
+        """Test that signup is valid for users with
+        the same email as other users"""
         SignUpForm({
             'username': 'User1',
             'email': 'duplicate@gmail.com',
@@ -104,6 +115,7 @@ class TestSignUpForm(TestCase):
         self.assertTrue(signup_form.is_valid())
 
     def test_duplicate_username(self):
+        "Test that signup is invalid if a username already exists"
         SignUpForm({
             'username': 'TestUser',
             'email': 'unique1@gmail.com',
