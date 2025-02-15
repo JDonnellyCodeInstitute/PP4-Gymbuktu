@@ -153,3 +153,19 @@ class TestCustomLoginForm(TestCase):
             "password": ""
         })
         self.assertFalse(login_form.is_valid())
+
+    def test_invalid_credentials_password(self):
+        """Test that an incorrect password is rejected."""
+        login_form = CustomLoginForm(data={
+            "username": "TestUser",
+            "password": "WrongPassword123!"
+        })
+        self.assertFalse(login_form.is_valid())
+
+    def test_invalid_credentials_username(self):
+        """Test that an incorrect username is rejected."""
+        login_form = CustomLoginForm(data={
+            "username": "WrongTestUser",
+            "password": "TestPassword1!"
+        })
+        self.assertFalse(login_form.is_valid())
