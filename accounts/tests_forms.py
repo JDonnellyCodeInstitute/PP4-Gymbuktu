@@ -57,3 +57,13 @@ class TestSignUpForm(TestCase):
             'password2': 'testPassword1!'
         })
         self.assertFalse(signup_form.is_valid())
+
+    def test_username_too_long(self):
+        long_username = 'T' * 151
+        signup_form = SignUpForm({
+            'username': long_username,
+            'email': 'gymbuktu@gmail.com',
+            'password1': 'testPassword1!',
+            'password2': 'testPassword1!'
+        })
+        self.assertFalse(signup_form.is_valid())
