@@ -58,3 +58,43 @@ class TestSignupView(TestCase):
 
         # Error message should be in the response
         self.assertContains(response, "This username is already taken.")
+
+    def test_signup_fails_if_password_too_weak(self):
+        """Test that a weak password shows an error message."""
+        response = self.client.post(self.signup_url, {
+            "username": "NewUser",
+            "email": "newuser@gmail.com",
+            "password1": "1234",
+            "password2": "1234",
+        })
+
+        # Should stay on signup page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/signup.html")
+
+        # Error message should be in the response
+        self.assertContains(
+            response, "Your password does not meet the security requirements")
+
+        # User should NOT be created
+        self.assertFalse(User.objects.filter(username="NewUser").exists())
+
+    def test_signup_fails_if_passwords_dont_match(self):
+        """Test that mismatched passwords fail validation."""
+        response = self.client.post(self.signup_url, {
+            "username": "NewUser",
+            "email": "newuser@gmail.com",
+            "password1": "StrongPassword1!",
+            "password2": "WrongPassword1!",
+        })
+
+        # Should stay on signup page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/signup.html")
+
+        # Error message should be in the response
+        self.assertContains(
+            response, "Password2: The two password fields didn’t match.")
+
+        # User should NOT be created
+        self.assertFalse(User.objects.filter(username="NewUser").exists())
