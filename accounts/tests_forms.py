@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from .forms import SignUpForm, CustomLoginForm
 
 
@@ -120,6 +121,15 @@ class TestSignUpForm(TestCase):
 
 
 class TestCustomLoginForm(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        """Set up a user for authentication tests."""
+        cls.user = User.objects.create_user(
+            username="TestUser",
+            email="testuser@gmail.com",
+            password="TestPassword1!"
+        )
+
     def test_form_is_valid(self):
         """Test that a valid login form is accepted."""
         login_form = CustomLoginForm(data={
