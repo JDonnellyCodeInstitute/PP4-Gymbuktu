@@ -12,3 +12,48 @@ class TestSignUpForm(TestCase):
             'password2': 'testPassword1!'
         })
         self.assertTrue(signup_form.is_valid())
+
+    def test_username_is_required(self):
+        signup_form = SignUpForm({
+            'username': '',
+            'email': 'gymbuktu@gmail.com',
+            'password1': 'testPassword1!',
+            'password2': 'testPassword1!'
+        })
+        self.assertFalse(signup_form.is_valid())
+
+    def test_email_is_required(self):
+        signup_form = SignUpForm({
+            'username': 'TestUser',
+            'email': '',
+            'password1': 'testPassword1!',
+            'password2': 'testPassword1!'
+        })
+        self.assertFalse(signup_form.is_valid())
+
+    def test_password1_is_required(self):
+        signup_form = SignUpForm({
+            'username': 'TestUser',
+            'email': 'gymbuktu@gmail.com',
+            'password1': '',
+            'password2': 'testPassword1!'
+        })
+        self.assertFalse(signup_form.is_valid())
+
+    def test_password2_is_required(self):
+        signup_form = SignUpForm({
+            'username': 'TestUser',
+            'email': 'gymbuktu@gmail.com',
+            'password1': 'testPassword1!',
+            'password2': ''
+        })
+        self.assertFalse(signup_form.is_valid())
+
+    def test_passwords_must_match(self):
+        signup_form = SignUpForm({
+            'username': 'TestUser',
+            'email': 'gymbuktu@gmail.com',
+            'password1': 'testPassword1',
+            'password2': 'testPassword1!'
+        })
+        self.assertFalse(signup_form.is_valid())
