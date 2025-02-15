@@ -159,3 +159,21 @@ class TestLoginView(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any(
             "Welcome back, ActiveUser!" in msg.message for msg in messages))
+
+    def test_login_fails_with_invalid_credentials(self):
+        """Test that login fails with incorrect username/password."""
+        response = self.client.post(self.login_url, {
+            "username": "WrongUser",
+            "password": "WrongPassword!",
+        })
+
+        # Should stay on login page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/login.html")
+
+        # Check that error message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(
+            "Username or password is unrecognised." in msg.message
+            for msg in messages
+        ))
