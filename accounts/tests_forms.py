@@ -169,3 +169,14 @@ class TestCustomLoginForm(TestCase):
             "password": "TestPassword1!"
         })
         self.assertFalse(login_form.is_valid())
+
+    def test_inactive_user(self):
+        """Test that inactive users cannot log in."""
+        self.user.is_active = False
+        self.user.save()
+
+        login_form = CustomLoginForm(data={
+            "username": "TestUser",
+            "password": "TestPassword1!"
+        })
+        self.assertFalse(login_form.is_valid())
