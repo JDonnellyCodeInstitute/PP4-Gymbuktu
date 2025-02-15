@@ -117,3 +117,29 @@ class TestSignUpForm(TestCase):
             'password2': 'ValidPass2!'
         })
         self.assertFalse(signup_form.is_valid())
+
+
+class TestCustomLoginForm(TestCase):
+    def test_form_is_valid(self):
+        """Test that a valid login form is accepted."""
+        login_form = CustomLoginForm(data={
+            "username": "TestUser",
+            "password": "TestPassword1!"
+        })
+        self.assertTrue(login_form.is_valid())
+
+    def test_username_is_required(self):
+        """Test that the login form fails when username is missing."""
+        login_form = CustomLoginForm(data={
+            "username": "",
+            "password": "TestPassword1!"
+        })
+        self.assertFalse(login_form.is_valid())
+
+    def test_password_is_required(self):
+        """Test that the login form fails when password is missing."""
+        login_form = CustomLoginForm(data={
+            "username": "TestUser",
+            "password": ""
+        })
+        self.assertFalse(login_form.is_valid())
