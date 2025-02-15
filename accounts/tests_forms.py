@@ -85,3 +85,35 @@ class TestSignUpForm(TestCase):
             'password2': 'testPassword1!'
         })
         self.assertFalse(signup_form.is_valid())
+
+    def test_duplicate_email_allowed(self):
+        SignUpForm({
+            'username': 'User1',
+            'email': 'duplicate@gmail.com',
+            'password1': 'ValidPass1!',
+            'password2': 'ValidPass1!'
+        }).save()
+
+        signup_form = SignUpForm({
+            'username': 'User2',
+            'email': 'duplicate@gmail.com',
+            'password1': 'ValidPass1!',
+            'password2': 'ValidPass1!'
+        })
+        self.assertTrue(signup_form.is_valid())
+
+    def test_duplicate_username(self):
+        SignUpForm({
+            'username': 'TestUser',
+            'email': 'unique1@gmail.com',
+            'password1': 'ValidPass1!',
+            'password2': 'ValidPass1!'
+        }).save()
+
+        signup_form = SignUpForm({
+            'username': 'TestUser',
+            'email': 'unique2@gmail.com',
+            'password1': 'ValidPass2!',
+            'password2': 'ValidPass2!'
+        })
+        self.assertFalse(signup_form.is_valid())
