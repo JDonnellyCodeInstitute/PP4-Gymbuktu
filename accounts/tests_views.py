@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.core import mail
 from accounts.models import EmailVerification
 
@@ -116,4 +117,45 @@ class TestSignupView(TestCase):
         self.assertContains(response, "This field is required.")
 
         # User should NOT be created
-        self.assertFalse(User.objects.filter(email="newuser@gmail.com").exists())
+        self.assertFalse(User.objects.filter(
+            email="newuser@gmail.com").exists())
+
+
+class TestLoginView(TestCase):
+
+    def setUp(self):
+        """Set up test client and create test users."""
+        self.client = Client()
+        self.login_url = reverse("login")
+
+        # Create an active user for successful login
+        self.active_user = User.objects.create_user(
+            username="ActiveUser",
+            email="activeuser@gmail.com",
+            password="TestPassword1!"
+        )
+
+        # Create an inactive (unverified) user
+        self.inactive_user = User.objects.create_user(
+            username="InactiveUser",
+            email="inactiveuser@gmail.com",
+            password="TestPassword1!"
+        )
+        self.inactive_user.is_active = False
+        self.inactive_user.save()
+
+    def test_successful_login(self):
+        """Test successful login redirects to
+        profile and shows success message."""
+        response = self.client.post(self.login_url, {
+            "username": "ActiveUser",
+            "password": "TestPassword1!",
+        })
+
+        # User should be redirected to profile
+        self.assertRedirects(response, reverse("profile"))
+
+        # Check that success message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(
+            "Welcome back, ActiveUser!" in msg.message for msg in messages))
