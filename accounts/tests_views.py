@@ -286,3 +286,21 @@ class TestVerifyEmailView(TestCase):
         response = self.client.get(invalid_url)
 
         self.assertEqual(response.status_code, 404)
+
+
+class TestCheckEmailView(TestCase):
+
+    def setUp(self):
+        """Set up test client."""
+        self.client = Client()
+        self.check_email_url = reverse("check_email")
+
+    def test_check_email_renders_correct_template(self):
+        """Test that check_email view loads and uses the correct template."""
+        response = self.client.get(self.check_email_url)
+
+        # The page should load successfully
+        self.assertEqual(response.status_code, 200)
+
+        # It should use the correct template
+        self.assertTemplateUsed(response, "accounts/check_email.html")
