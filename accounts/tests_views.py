@@ -259,3 +259,23 @@ class TestVerifyEmailView(TestCase):
 
         # Should redirect to login page
         self.assertRedirects(response, reverse("login"))
+
+    def test_already_verified_token(self):
+        """Test that visiting an already verified
+        token shows 'already verified' page."""
+        # Mark token as verified and activate user
+        self.token_obj.is_verified = True
+        self.token_obj.save()
+
+        self.user.is_active = True
+        self.user.save()
+
+        response = self.client.get(self.verify_url)
+
+        # Should render the already verified template
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/already_verified.html")
+
+        # User should still be active
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_active)
