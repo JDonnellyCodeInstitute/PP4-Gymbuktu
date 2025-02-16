@@ -132,3 +132,37 @@ class TestClassForm(TestCase):
             f"{self.facility.name} is hosting a class at this time.",
             new_class.errors["__all__"]
         )
+
+    def test_conflicting_schedule_with_same_instructor(self):
+        """Test that an instructor cannot be booked for overlapping classes."""
+        start_time = now() + timedelta(days=1, hours=1)
+        end_time = start_time + timedelta(hours=1)
+
+        # Create an existing class for the instructor
+        Class.objects.create(
+            name="Existing Class",
+            description="Test class",
+            instructor=self.instructor,
+            facility=self.facility,
+            start_time=start_time,
+            end_time=end_time,
+        )
+
+        # Create a conflicting class with the same instructor
+        new_class = ClassForm(data={
+            "name": "Conflicting Class",
+            "description": "Test conflict",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": start_time,
+            "end_time": end_time,
+        })
+
+        self.assertFalse(new_class.is_valid())
+
+        # Check non-field error
+        self.assertIn("__all__", new_class.errors)
+        self.assertIn(
+            f"{self.instructor.name} is teaching a class at this time.",
+            new_class.errors["__all__"]
+        )
