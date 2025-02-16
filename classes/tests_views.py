@@ -113,3 +113,13 @@ class TestManageClassesView(TestCase):
             {"date": self.class_date}
         )
         self.assertContains(response, "Yoga Session")
+
+    def test_invalid_date_defaults_to_today(self):
+        """Test that an invalid date will default to today"""
+        self.client.login(username="staffuser", password="TestPass123!")
+        response = self.client.get(
+            self.manage_classes_url,
+            {"date": "Invalid-date"}
+        )
+        # Test class still shows
+        self.assertContains(response, "Yoga Session")
