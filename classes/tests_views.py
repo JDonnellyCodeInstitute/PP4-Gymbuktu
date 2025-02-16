@@ -30,3 +30,12 @@ class TestStaffRequired(TestCase):
     def test_staff_user_has_access(self):
         """Test that a staff user passes the `staff_required` check."""
         self.assertTrue(staff_required(self.staff_user))
+
+    def test_superuser_has_access(self):
+        """Test that a superuser passes the `staff_required` check."""
+        self.assertTrue(staff_required(self.superuser))
+
+    def test_regular_user_denied_access(self):
+        """Test that a non-staff, non-superuser
+        fails the `staff_required` check."""
+        self.assertFalse(staff_required(self.regular_user))
