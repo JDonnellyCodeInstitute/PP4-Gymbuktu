@@ -177,3 +177,21 @@ class TestLoginView(TestCase):
             "Username or password is unrecognised." in msg.message
             for msg in messages
         ))
+
+    def test_login_fails_for_unverified_user(self):
+        """Test that login fails for an unverified (inactive) user."""
+        response = self.client.post(self.login_url, {
+            "username": "InactiveUser",
+            "password": "TestPassword1!",
+        })
+
+        # Should stay on login page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/login.html")
+
+        # Check that error message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(
+            "Username or password is unrecognised." in msg.message
+            for msg in messages
+        ))
