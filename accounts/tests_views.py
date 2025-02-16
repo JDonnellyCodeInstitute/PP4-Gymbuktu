@@ -411,3 +411,10 @@ class TestProfileView(TestCase):
         response = self.client.get(self.profile_url)
 
         self.assertContains(response, "Test Class")
+
+    def test_past_bookings_displayed_in_profile(self):
+        """Test that past bookings appear on the profile page."""
+        self.client.login(username="TestUser", password="TestPassword1!")
+        response = self.client.get(self.profile_url)
+
+        self.assertContains(response, "Past Test Class")
