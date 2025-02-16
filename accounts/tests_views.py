@@ -304,3 +304,22 @@ class TestCheckEmailView(TestCase):
 
         # It should use the correct template
         self.assertTemplateUsed(response, "accounts/check_email.html")
+
+
+class TestAlreadyVerifiedView(TestCase):
+
+    def setUp(self):
+        """Set up test client."""
+        self.client = Client()
+        self.already_verified_url = reverse("already_verified")
+
+    def test_already_verified_renders_correct_template(self):
+        """Test that already_verified view
+        loads and uses the correct template."""
+        response = self.client.get(self.already_verified_url)
+
+        # The page should load successfully
+        self.assertEqual(response.status_code, 200)
+
+        # It should use the correct template
+        self.assertTemplateUsed(response, "accounts/already_verified.html")
