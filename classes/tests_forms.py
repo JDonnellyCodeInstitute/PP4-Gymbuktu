@@ -45,3 +45,23 @@ class TestClassForm(TestCase):
         })
 
         self.assertFalse(form.is_valid())
+        self.assertIn("name", form.errors)
+        self.assertIn("description", form.errors)
+
+    def test_end_time_must_be_after_start_time(self):
+        """Test that a class cannot have start_time >= end_time."""
+        form_data = {
+            "name": "Yoga Class",
+            "description": "A relaxing yoga session.",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": (now() + timedelta(days=1, hours=1)).isoformat(),
+            "end_time": (now() + timedelta(days=1)).isoformat(),
+            "repeat_schedule": "weekly"
+        }
+        form = ClassForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("__all__", form.errors)
+        self.assertIn(
+            "The class start must be before the end.", form.errors["__all__"]
+        )
