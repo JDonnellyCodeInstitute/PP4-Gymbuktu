@@ -206,3 +206,13 @@ class TestManageAttendanceView(TestCase):
         self.assertRedirects(
             response, f"{reverse('login')}?next={self.manage_attendance_url}"
         )
+
+    def test_staff_can_access_manage_attendance(self):
+        """Ensure staff users can access the manage attendance page."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        response = self.client.get(self.manage_attendance_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "classes/manage_attendance.html")
+        self.assertIn("gym_class", response.context)
+        self.assertIn("bookings", response.context)
+        self.assertEqual(response.context["total_bookings"], 2)
