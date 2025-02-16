@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.core import mail
 from accounts.models import EmailVerification
+import uuid
 
 
 class TestSignupView(TestCase):
@@ -213,3 +214,48 @@ class TestLoginView(TestCase):
             "Username or password is unrecognised." in msg.message
             for msg in messages
         ))
+
+
+class TestVerifyEmailView(TestCase):
+
+    def setUp(self):
+        """Set up test client and create a user with verification token."""
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="TestUser",
+            email="testuser@gmail.com",
+            password="TestPassword1!",
+            is_active=False  # User should start inactive
+        )
+
+        # Create a verification token
+        self.token_obj = EmailVerification.objects.create(
+            user=self.user,
+            token=uuid.uuid4(),
+            is_verified=False  # Starts as unverified
+        )
+        self.verify_url = reverse(
+            "verify_email", args=[str(self.token_obj.token)])
+
+    def test_successful_verification(self):
+        """Test that a valid token activates
+        the user and redirects to login."""
+        response = self.client.get(self.verify_url)
+
+        # Check that user is now active
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_active)
+
+        # Check that token is marked as verified
+        self.token_obj.refresh_from_db()
+        self.assertTrue(self.token_obj.is_verified)
+
+        # Check success message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(
+            "Your account has been verified. You can now log in."
+            in msg.message for msg in messages
+        ))
+
+        # Should redirect to login page
+        self.assertRedirects(response, reverse("login"))
