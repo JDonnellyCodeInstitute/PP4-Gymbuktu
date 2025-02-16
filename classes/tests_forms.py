@@ -80,3 +80,17 @@ class TestClassForm(TestCase):
         form = ClassForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("repeat_schedule", form.errors)
+
+    def test_blank_repeat_schedule_is_valid(self):
+        """Test that leaving repeat_schedule blank is valid."""
+        form_data = {
+            "name": "Yoga Class",
+            "description": "A relaxing yoga session.",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": (now() + timedelta(days=1)).isoformat(),
+            "end_time": (now() + timedelta(days=1, hours=1)).isoformat(),
+            "repeat_schedule": ""  # Optional field
+        }
+        form = ClassForm(data=form_data)
+        self.assertTrue(form.is_valid())
