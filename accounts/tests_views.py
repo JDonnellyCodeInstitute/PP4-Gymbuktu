@@ -404,3 +404,10 @@ class TestProfileView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "accounts/profile.html")
         self.assertContains(response, "TestUser")
+
+    def test_current_bookings_displayed_in_profile(self):
+        """Test that current bookings appear on the profile page."""
+        self.client.login(username="TestUser", password="TestPassword1!")
+        response = self.client.get(self.profile_url)
+
+        self.assertContains(response, "Test Class")
