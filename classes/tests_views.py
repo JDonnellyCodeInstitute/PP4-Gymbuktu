@@ -255,3 +255,28 @@ class TestManageAttendanceView(TestCase):
 
         # Ensure redirection back to manage attendance page
         self.assertRedirects(response, self.manage_attendance_url)
+
+
+class TestAddClassView(TestCase):
+
+    def setUp(self):
+        """Set up test data, including a staff user and required models."""
+        # Create a staff user
+        self.staff_user = User.objects.create_user(
+            username="staffuser", password="TestPass123!", is_staff=True
+        )
+
+        # Create a non-staff user
+        self.non_staff_user = User.objects.create_user(
+            username="testuser", password="TestPass123!"
+        )
+
+        # Create an instructor and a facility
+        self.instructor = Instructor.objects.create(name="John Doe")
+        self.facility = Facilitie.objects.create(
+            name="Studio",
+            max_capacity=15
+        )
+
+        # Define the URL for adding a class
+        self.add_class_url = reverse("add_class")
