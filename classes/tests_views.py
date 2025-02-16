@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
+from classes.forms import ClassForm
 from classes.views import staff_required
 from classes.models import Class, Booking, Instructor, Facilitie
 
@@ -280,3 +281,20 @@ class TestAddClassView(TestCase):
 
         # Define the URL for adding a class
         self.add_class_url = reverse("add_class")
+
+    def test_staff_can_access_add_class_page(self):
+        """Ensure staff users can access the add class form."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        response = self.client.get(self.add_class_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "classes/class_form.html")
+        self.assertIsInstance(response.context["form"], ClassForm)
+
+    def test_non_staff_redirected_from_add_class_page(self):
+        """Ensure non-staff users are redirected
+        when trying to access add class."""
+        self.client.login(username="testuser", password="TestPass123!")
+        response = self.client.get(self.add_class_url)
+        self.assertRedirects(
+            response, f"{reverse('login')}?next={self.add_class_url}"
+        )
