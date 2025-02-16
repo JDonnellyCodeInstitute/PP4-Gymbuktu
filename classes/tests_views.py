@@ -104,3 +104,12 @@ class TestManageClassesView(TestCase):
         response = self.client.get(self.manage_classes_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "classes/manage_classes.html")
+
+    def test_classes_display_for_selected_date(self):
+        """Test that only classes for the selected date are displayed."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        response = self.client.get(
+            self.manage_classes_url,
+            {"date": self.class_date}
+        )
+        self.assertContains(response, "Yoga Session")
