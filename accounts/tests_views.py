@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.core import mail
 from accounts.models import EmailVerification
+from classes.models import Booking, Class
+from django.utils import timezone
 import uuid
 
 
@@ -323,3 +325,40 @@ class TestAlreadyVerifiedView(TestCase):
 
         # It should use the correct template
         self.assertTemplateUsed(response, "accounts/already_verified.html")
+
+
+class TestProfileView(TestCase):
+
+    def setUp(self):
+        """Set up test client, user, and sample bookings."""
+        self.client = Client()
+        self.profile_url = reverse("profile")
+
+        # Create test user
+        self.user = User.objects.create_user(
+            username="TestUser",
+            email="testuser@gmail.com",
+            password="TestPassword1!"
+        )
+
+        # Create a test class
+        test_class = Class.objects.create(
+            name="Test Class",
+            start_time=timezone.now(),
+            end_time=timezone.now() + timezone.timedelta(hours=1),
+            instructor=None,
+            facility=None
+        )
+
+        # Create bookings for the user
+        self.current_booking = Booking.objects.create(
+            user=self.user,
+            gym_class=test_class,
+            class_status=0
+        )
+
+        self.past_booking = Booking.objects.create(
+            user=self.user,
+            gym_class=test_class,
+            class_status=2
+        )
