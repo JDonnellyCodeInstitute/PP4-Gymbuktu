@@ -394,3 +394,13 @@ class TestProfileView(TestCase):
         self.assertRedirects(
             response, f"{reverse('login')}?next={self.profile_url}"
         )
+
+    def test_profile_page_loads_for_logged_in_user(self):
+        """Test that the profile page loads
+        successfully for an authenticated user."""
+        self.client.login(username="TestUser", password="TestPassword1!")
+        response = self.client.get(self.profile_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/profile.html")
+        self.assertContains(response, "TestUser")
