@@ -123,3 +123,14 @@ class TestManageClassesView(TestCase):
         )
         # Test class still shows
         self.assertContains(response, "Yoga Session")
+
+    def test_attendance_data_in_context(self):
+        """Test that attendance data is passed correctly in the context."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        response = self.client.get(self.manage_classes_url)
+        context = response.context
+
+        self.assertIn("class_data", context)
+        self.assertEqual(len(context["class_data"]), 1)
+        self.assertEqual(context["class_data"][0]["total_bookings"], 2)
+        self.assertEqual(context["class_data"][0]["attended_count"], 1)
