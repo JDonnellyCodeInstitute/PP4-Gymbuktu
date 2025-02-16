@@ -443,3 +443,15 @@ class TestAutoLogoutView(TestCase):
 
         self.assertRedirects(response, self.login_url)
         self.assertFalse("_auth_user_id" in self.client.session)
+
+    def test_auto_logout_shows_warning_message(self):
+        """Test that auto_logout displays a logout warning message."""
+        self.client.login(username="TestUser", password="TestPassword1!")
+
+        response = self.client.get(self.auto_logout_url, follow=True)
+
+        messages = list(response.context["messages"])
+        self.assertTrue(any(
+            "You have been logged out due to inactivity." in msg.message
+            for msg in messages
+        ))
