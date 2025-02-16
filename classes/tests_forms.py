@@ -1,7 +1,8 @@
 from django.test import TestCase
 from classes.forms import ClassForm
 from classes.models import Instructor, Facilitie
-from django.utils.timezone import now, timedelta
+from django.utils.timezone import now
+from datetime import timedelta
 
 
 class TestClassForm(TestCase):
@@ -27,3 +28,20 @@ class TestClassForm(TestCase):
         }
         form = ClassForm(data=form_data)
         self.assertTrue(form.is_valid())
+
+    def test_missing_required_fields(self):
+        """Test that missing required fields make the form invalid."""
+        valid_start_time = now()
+        valid_end_time = valid_start_time + timedelta(hours=1)
+
+        form = ClassForm({
+            "name": "",
+            "description": "",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": valid_start_time.isoformat(),
+            "end_time": valid_end_time.isoformat(),
+            "repeat_schedule": "",
+        })
+
+        self.assertFalse(form.is_valid())
