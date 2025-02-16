@@ -216,3 +216,42 @@ class TestManageAttendanceView(TestCase):
         self.assertIn("gym_class", response.context)
         self.assertIn("bookings", response.context)
         self.assertEqual(response.context["total_bookings"], 2)
+
+    def test_attendance_updates_correctly(self):
+        """Ensure attendance updates correctly
+        when staff marks users as attended."""
+        self.client.login(username="staffuser", password="TestPass123!")
+
+        # Mark first user as attended
+        post_data = {
+            f"attended_{self.booking1.id}": "on",
+        }
+
+        response = self.client.post(
+            self.manage_attendance_url,
+            post_data,
+            follow=True
+        )
+
+        # Refresh booking instances
+        self.booking1.refresh_from_db()
+        self.booking2.refresh_from_db()
+
+        # Verify updates
+        self.assertTrue(self.booking1.attended)  # First user marked attended
+        self.assertFalse(self.booking2.attended)  # Second user remains absent
+
+        # Check class's attendees list is updated
+        self.gym_class.refresh_from_db()
+        self.assertIn(self.booking1.user, self.gym_class.attendees.all())
+        self.assertNotIn(self.booking2.user, self.gym_class.attendees.all())
+
+        # Verify success message
+        messages = list(response.context["messages"])
+        self.assertTrue(any(
+            "Attendance updated successfully!" in msg.message
+            for msg in messages
+        ))
+
+        # Ensure redirection back to manage attendance page
+        self.assertRedirects(response, self.manage_attendance_url)
