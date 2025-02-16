@@ -418,3 +418,28 @@ class TestProfileView(TestCase):
         response = self.client.get(self.profile_url)
 
         self.assertContains(response, "Past Test Class")
+
+
+class TestAutoLogoutView(TestCase):
+
+    def setUp(self):
+        """Set up test client and user."""
+        self.client = Client()
+        self.login_url = reverse("login")
+        self.auto_logout_url = reverse("auto_logout")
+
+        # Create test user
+        self.user = User.objects.create_user(
+            username="TestUser",
+            email="testuser@gmail.com",
+            password="TestPassword1!"
+        )
+
+    def test_auto_logout_redirects_to_login(self):
+        """Test that auto_logout logs the user out and redirects to login."""
+        self.client.login(username="TestUser", password="TestPassword1!")
+
+        response = self.client.get(self.auto_logout_url)
+
+        self.assertRedirects(response, self.login_url)
+        self.assertFalse("_auth_user_id" in self.client.session)

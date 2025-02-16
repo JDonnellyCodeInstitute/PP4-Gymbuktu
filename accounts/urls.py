@@ -34,4 +34,7 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(
             template_name='accounts/password_reset_complete.html'
          ), name='password_reset_complete'),
+
+    # Auto Logout
+    path('auto-logout/', views.auto_logout, name='auto_logout'),
 ]
