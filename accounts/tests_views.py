@@ -195,3 +195,21 @@ class TestLoginView(TestCase):
             "Username or password is unrecognised." in msg.message
             for msg in messages
         ))
+
+    def test_login_fails_with_empty_fields(self):
+        """Test that login fails when fields are left empty."""
+        response = self.client.post(self.login_url, {
+            "username": "",
+            "password": "",
+        })
+
+        # Should stay on login page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "accounts/login.html")
+
+        # Check that error message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any(
+            "Username or password is unrecognised." in msg.message
+            for msg in messages
+        ))
