@@ -279,3 +279,10 @@ class TestVerifyEmailView(TestCase):
         # User should still be active
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_active)
+
+    def test_invalid_token(self):
+        """Test that an invalid token returns a 404 error."""
+        invalid_url = reverse("verify_email", args=[str(uuid.uuid4())])
+        response = self.client.get(invalid_url)
+
+        self.assertEqual(response.status_code, 404)
