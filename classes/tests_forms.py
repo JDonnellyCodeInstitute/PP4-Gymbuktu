@@ -65,3 +65,18 @@ class TestClassForm(TestCase):
         self.assertIn(
             "The class start must be before the end.", form.errors["__all__"]
         )
+
+    def test_invalid_repeat_schedule(self):
+        """Test that an invalid repeat_schedule value is rejected."""
+        form_data = {
+            "name": "Yoga Class",
+            "description": "A relaxing yoga session.",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": (now() + timedelta(days=1)).isoformat(),
+            "end_time": (now() + timedelta(days=1, hours=1)).isoformat(),
+            "repeat_schedule": "monthly"  # Not in valid choices
+        }
+        form = ClassForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("repeat_schedule", form.errors)
