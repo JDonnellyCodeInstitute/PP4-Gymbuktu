@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.core import mail
 from accounts.models import EmailVerification
-from classes.models import Booking, Class
-from django.utils import timezone
+from classes.models import Booking, Class, Instructor, Facilitie
+from django.utils.timezone import now
 import uuid
 
 
@@ -330,7 +330,7 @@ class TestAlreadyVerifiedView(TestCase):
 class TestProfileView(TestCase):
 
     def setUp(self):
-        """Set up test client, user, and sample bookings."""
+        """Set up test client, user, instructor, and sample bookings."""
         self.client = Client()
         self.profile_url = reverse("profile")
 
@@ -341,24 +341,56 @@ class TestProfileView(TestCase):
             password="TestPassword1!"
         )
 
-        # Create a test class
-        test_class = Class.objects.create(
+        # Create an instructor
+        self.instructor = Instructor.objects.create(name="Keith")
+
+        # Create a test facility
+        self.facility = Facilitie.objects.create(
+            name="Reception",
+            max_capacity=10
+        )
+
+        # Set class times to avoid overlap
+        start_time_current = now().replace(hour=23, minute=30)
+        end_time_current = now().replace(hour=23, minute=59)
+
+        start_time_past = now().replace(hour=22, minute=0)
+        end_time_past = now().replace(hour=22, minute=30)
+
+        # Create a test class for current bookings
+        self.test_class = Class.objects.create(
             name="Test Class",
-            start_time=timezone.now(),
-            end_time=timezone.now() + timezone.timedelta(hours=1),
-            instructor=None,
-            facility=None
+            start_time=start_time_current,
+            end_time=end_time_current,
+            instructor=self.instructor,
+            facility=self.facility
+        )
+
+        # Create a separate test class for past bookings
+        self.past_test_class = Class.objects.create(
+            name="Past Test Class",
+            start_time=start_time_past,
+            end_time=end_time_past,
+            instructor=self.instructor,
+            facility=self.facility
         )
 
         # Create bookings for the user
         self.current_booking = Booking.objects.create(
             user=self.user,
-            gym_class=test_class,
+            gym_class=self.test_class,
             class_status=0
         )
 
         self.past_booking = Booking.objects.create(
             user=self.user,
-            gym_class=test_class,
+            gym_class=self.past_test_class,
             class_status=2
+        )
+
+    def test_redirects_if_not_logged_in(self):
+        """Test that unauthenticated users are redirected to the login page."""
+        response = self.client.get(self.profile_url)
+        self.assertRedirects(
+            response, f"{reverse('login')}?next={self.profile_url}"
         )
