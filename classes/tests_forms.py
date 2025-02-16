@@ -1,6 +1,6 @@
 from django.test import TestCase
 from classes.forms import ClassForm
-from classes.models import Instructor, Facilitie
+from classes.models import Instructor, Facilitie, Class
 from django.utils.timezone import now
 from datetime import timedelta
 
@@ -94,3 +94,41 @@ class TestClassForm(TestCase):
         }
         form = ClassForm(data=form_data)
         self.assertTrue(form.is_valid())
+
+    def test_conflicting_schedule_with_same_facility(self):
+        """Test that a class with overlapping
+        time and same facility is rejected."""
+        start_time = now() + timedelta(days=1, hours=1)
+        end_time = start_time + timedelta(hours=1)
+
+        # Create a different instructor
+        another_instructor = Instructor.objects.create(name="Jane Doe")
+
+        # Create an existing class in the facility
+        Class.objects.create(
+            name="Existing Class",
+            description="Test class",
+            instructor=another_instructor,
+            facility=self.facility,
+            start_time=start_time,
+            end_time=end_time,
+        )
+
+        # Create a conflicting class in the same facility
+        new_class = ClassForm(data={
+            "name": "Conflicting Class",
+            "description": "Test conflict",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": start_time,
+            "end_time": end_time,
+        })
+
+        self.assertFalse(new_class.is_valid())
+
+        # Check non-field error
+        self.assertIn("__all__", new_class.errors)
+        self.assertIn(
+            f"{self.facility.name} is hosting a class at this time.",
+            new_class.errors["__all__"]
+        )
