@@ -97,3 +97,10 @@ class TestManageClassesView(TestCase):
         self.client.login(username="regular", password="TestPass123!")
         response = self.client.get(self.manage_classes_url)
         self.assertEqual(response.status_code, 302)
+
+    def test_staff_can_access_manage_classes(self):
+        """Test that staff can access the manage_classes view."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        response = self.client.get(self.manage_classes_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "classes/manage_classes.html")
