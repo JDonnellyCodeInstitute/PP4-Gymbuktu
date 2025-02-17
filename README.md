@@ -1,5 +1,7 @@
 # Gymbuktu
 
+
+
 ## Project Scope
 
 1. Purpose
@@ -145,6 +147,42 @@
 
 ---
 This structured approach ensures GymBukTu provides a smooth and efficient user experience while maintaining clarity and ease of use for both gym members and administrators.
+
+## Wireframes
+
+The wireframes are reflective of the simple theme of the site's styling, generally, bootstrap, and in particular the bootstrap card class, is used to present information clearly and efficiently, usually acting to signpost or navigate the user as required. Below we'll highlight where more was planned and implemented than the simple bootstrap card.
+
+The first schematic was a simple one for the hypothetical layout of gymbuktu showing the reception area and the two main facilities referred to in most classes.
+
+![LAYOUT](static\images\readme\wireframes\layout.png)
+
+The **home page** changed little in the translation from wire frame bar the spacing of the testimonials on the smaller screen. It was felt that bootstrap's simple block spacing made for a sleeker look. The non-social media section of the footer is also hidden on smaller screens to avoid clutter.
+
+![HOME](static\images\readme\wireframes\home-page.png)
+
+The **classes page** is majoritively the same as the wireframes also, with slight formatting changes on smaller screens.
+
+![CLASSES](static\images\readme\wireframes\classes.png)
+
+The **class_detail** page changed more significantly than most with the addition of a second card to house status information and the booking / cancellation buttons.
+
+![DETAIL](static\images\readme\wireframes\class-detail.png)
+
+The **manage classes** page is close to the below with some updates to formatting and an added button for staff to manage classes manually.
+
+![MANAGE](static\images\readme\wireframes\manage-classes.png)
+
+The **profile page** was altered to have the quick links section appear more cleanly at the bottom of the information presented.
+
+![PROFILE](static\images\readme\wireframes\profile.png)
+
+The **feedback page** again is basically as planned but during development functionality was added to allow users to see their submitted input beneath the form.
+
+![FEEDBACK](static\images\readme\wireframes\feedback.png)
+
+The gym rules page and additional / connection pages are all laid out roughly the same with a bootstrap card as the focal point. The same is true of the rest of the informational pages mainly stored in the accounts and classes apps such as password reset complete, already verified, booking confirmation, cancel booking, etc.
+
+![GENERIC](static\images\readme\wireframes\generic.png)
 
 ## ERD
 
