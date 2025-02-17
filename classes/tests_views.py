@@ -403,3 +403,31 @@ class TestEditClassView(TestCase):
         self.assertRedirects(
             response, f"{reverse('login')}?next={self.edit_class_url}"
         )
+
+    def test_staff_can_edit_class(self):
+        """Ensure staff users can successfully edit a class."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        form_data = {
+            "name": "Updated Yoga Class",
+            "description": "An updated relaxing yoga session.",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": "2025-12-01T12:00",
+            "end_time": "2025-12-01T13:00",
+            "repeat_schedule": "daily"
+        }
+        response = self.client.post(
+            self.edit_class_url, form_data, follow=True
+        )
+
+        # Verify class was updated
+        self.test_class.refresh_from_db()
+        self.assertEqual(self.test_class.name, "Updated Yoga Class")
+        self.assertEqual(self.test_class.repeat_schedule, "daily")
+
+        # Verify redirect and success message
+        self.assertRedirects(response, reverse("manage_classes"))
+        messages = list(response.context["messages"])
+        self.assertTrue(any(
+            "Class updated successfully!" in msg.message for msg in messages
+        ))
