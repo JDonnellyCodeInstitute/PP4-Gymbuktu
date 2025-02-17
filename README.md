@@ -75,7 +75,7 @@
 
   Database: PostgreSQL will be used as the relational database for storing and managing data.
 
-  Testing: Core functionalities (e.g., user management, booking, and admin tools) will undergo automated testing.
+  Testing: Core functionalities (e.g., user management, booking, and admin tools) will undergo a mix of automated and manual testing.
 
   Deployment: The system will be deployed on the cloud platform Heroku for accessibility and scalability.
 
@@ -87,6 +87,64 @@
   - Administrators can efficiently manage class schedules and bookings.
   - The system provides a responsive, mobile-friendly user experience.
 
+## The Five Planes of User Experience
+
+### **The Strategy Plane**
+#### **Defining Goals and User Needs:**
+- The goal of GymBukTu is to provide a user-friendly gym booking system that allows gym members to book, manage, and cancel classes while offering gym administrators tools to manage schedules and attendance.
+- The system should provide a smooth and intuitive booking process, ensuring users can quickly find available classes and receive on-screen confirmations.
+- Members need an efficient way to track their upcoming and past bookings, which is achieved through the profile page.
+- Admins should have an easy-to-use interface for class management, ensuring they can update schedules and manage attendance without hassle.
+- The system follows an **Agile development process**.
+
+### **The Scope Plane**
+#### **Determining Features and Content:**
+- **Core Features:**
+  - User authentication (sign-up, login, logout).
+  - Booking system allowing members to book, manage, and cancel classes.
+  - Gym administrators can add, edit, and remove classes.
+  - Mobile-friendly design for non-admin users for easy access on various devices.
+  
+- **Additional Features (Should-Haves & Nice-To-Haves):**
+  - A waitlist system for fully booked classes.
+  - Class reminders and notifications to reduce no-shows.
+  - A feedback system allowing users to rate classes.
+  - A progressive web app (PWA) for an app-like experience.
+  
+### **The Structure Plane**
+#### **Setting the Sitemap and Logical Flow:**
+- The system follows a clear and structured navigation flow, ensuring users can access the most critical features with minimal effort.
+- The primary navigation links include:
+  - **Home** – Landing page including hero image, sign up link and testimonials.
+  - **Classes** – List of available gym classes with booking options.
+  - **Profile** – Displays current and past bookings with management options.
+  - **Feedback** – Users can submit general feedback.
+  - **Manage Classes** - Only available to staff, this is the frontend where staff can create, update and delete classes.
+
+### **The Skeleton Plane**
+#### **Layout and Navigation Design:**
+- **Mobile-First Approach:**
+  - Navigation uses a burger menu for compact mobile usability.
+  - Responsive design ensures smooth user experience across devices.
+  - Only exception is the manage classes section where it would be expected that staff with CRUD functionality can only access the system via an onsite computer, not on their personal devices.
+- **User Flow Considerations:**
+  - Bookings appear first on the profile page, with past bookings listed below.
+  - Successful feedback submission redirects users to a thank-you page for confirmation.
+  - Error handling and validation messages guide users if they input incorrect data.
+
+### **The Surface Plane**
+#### **Visual Design and Styling:**
+- The interface follows a minimalist design, ensuring users can focus on the core functionalities without distractions.
+- Bootstrap is used to provide a clean, professional look while maintaining simplicity.
+- Consistent color schemes enhance the user experience:
+  - Green for success messages (e.g., booking confirmation).
+  - Red for errors and cancellations.
+  - Blue for informational messages.
+- Simple and readable typography ensures accessibility and ease of use.
+- Icons are used sparingly to indicate actions (e.g., edit, delete, view details).
+
+---
+This structured approach ensures GymBukTu provides a smooth and efficient user experience while maintaining clarity and ease of use for both gym members and administrators.
 
 ## PEP8 Compliance
 
