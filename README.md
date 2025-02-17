@@ -1,6 +1,8 @@
 # Gymbuktu
 
+Welcome to Gymbuktu, a modern gym that offers an array of classes as well as treadmill and freeweight use. The Gymbuktu site acts as a hub for users to create a profile, book or cancel classes, and track past and future ones. Admin users can do all this as well as update, add or delete classes in a frontend staff-only admin panel.
 
+![MOCK](static\images\readme\mock-up\all-devices-black.png)
 
 ## Project Scope
 
@@ -191,8 +193,77 @@ ERD for database connectivity as per below. Note: The maximum capacity in the cl
 ![SCHEMA](static\images\readme\erd\erd-schema.png)
 ![ERD](static\images\readme\erd\ERD.png)
 
+## Features
+
+### The Home Page, Header, and Footer
+
+- The home page presents users with an attractive hero image, which contains a link to sign-up to the site, as well as three testimonials from other users.
+- The user starts here on their site journey and can easily and clearly see where they may go from here from the navbar and footer links.
+- In the header the user will see the logo which links back to the home page if clicked.
+- On the right hand side of the banner users will see 'Hello {username}' and be given the option to log out (if logged in). They will also see a nav containing options for 'Home', 'Classes', 'Feedback' and 'Profile'.
+
+![HOME-Logged-In-Standard-User](static\images\readme\features\home_loggedin_standard.png)
+
+- On the right hand side of the banner users will see Log In and Sign Up links (if logged out). They will also see a nav containing options for 'Home', 'Classes', 'Feedback' and 'Profile'.
+
+![HOME-Logged-Out](static\images\readme\features\home-logged-out.png)
+
+- Members of staff who are logged in will see, instead of classes in their nav, manage classes which they can navgate to to update add or delete classes. 
+
+![HOME-Logged-In-Staff-User](static\images\readme\features\home_loggedin_staff.png)
+
+- On large screens the footer contains contact information for the gym, copyright and links to the gym rules users should adhere to when attending. It also contains links to the major social media sites.
+
+![RULES](static\images\readme\features\rules.png)
+
+- On smaller screens the nav breaks down into a burger menu, the testimonials stack neatly, and all but the social media links are hidden in the footer. The login / signup / logout functionality all moves into the burger menu, as does the link to gym rules.
+
+![smaller-screens-top](static\images\readme\features\home-small-1.png)
+![smaller-screens-bottom](static\images\readme\features\home-small-2.png)
+![burger-menu](static\images\readme\features\home-small-3.png)
+
+### Classes
+
+- In the classes tab users can see a full list of classes for a given date including all the relevant information.
+- The user can filter classes by class name, instructor and date.
+- The spaces column will update dynamically as more people book each class or if the class has gone past its start (IN PROGRESS) or end times (COMPLETED).
+
+![classes](static\images\readme\features\classes.png)
+
+- The user can click into a class and see a description of the class, they can also book the class if the class has not already started or finished and is not full. If they have already booked and the class has not yet started they can cancel the booking.
+
+![class-detail](static\images\readme\features\class-detail.png)
+
+- Both the classes and class detail pages are fully responsive. The class list instead of a table presents each class on its own small bootstrap card.
+
+![classes-small](static\images\readme\features\classes-small.png)
+![class-detail-small](static\images\readme\features\class-detail-small.png)
+
+### Manage Classes
+
+- Staff users can log into the manage classes page and filter classes by date.
+- They can also add, edit, delete and manage the attendance of classes (marking users as having attended or not).
+- The user will receive confirmation messages for each action.
+
+![manage-classes](static\images\readme\features\manage-classes.png)
+![manage-attendance](static\images\readme\features\manage-attendance.png)
+![edit-class](static\images\readme\features\edit-class.png)
+
+- When a member of staff deletes a class any members booked to attend will receive an email notifying them of the cancellation.
+
+![delete-class](static\images\readme\features\delete-class.png)
+![email](static\images\readme\features\cancellation-email.png)
+
+### Feedback
+
+- Users can provide general feedback and see feedback they have previously submitted.
+
+![feedback](static\images\readme\features\feedback.png)
+
+
+
 ## PEP8 Compliance
 
-PEP8 compliance for each app is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
+PEP8 compliance for each major directory is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
 
 ![ALL](static\images\readme\pep8\pep8-all.png)
