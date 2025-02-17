@@ -260,7 +260,19 @@ ERD for database connectivity as per below. Note: The maximum capacity in the cl
 
 ![feedback](static\images\readme\features\feedback.png)
 
+### Profile
 
+- Users are directed to the profile page upon login, here they can see current bookings, which they can cancel, and past bookings.
+
+![profile](static\images\readme\features\profile.png)
+
+- The profile is also fully responsive
+
+![profile-small-screen](static\images\readme\features\profile-small.png)
+
+### Sign-Up
+
+- Users can sign-up / register easily using django's inbuilt signup functionality
 
 ## PEP8 Compliance
 
