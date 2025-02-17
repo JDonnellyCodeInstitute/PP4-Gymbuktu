@@ -349,3 +349,39 @@ class TestAddClassView(TestCase):
         self.assertFormError(
             response, "form", None, "The class start must be before the end."
         )
+
+
+class TestEditClassView(TestCase):
+
+    def setUp(self):
+        """Set up test data, including a staff
+        user, class, and required models."""
+        # Create a staff user
+        self.staff_user = User.objects.create_user(
+            username="staffuser", password="TestPass123!", is_staff=True
+        )
+
+        # Create a non-staff user
+        self.non_staff_user = User.objects.create_user(
+            username="testuser", password="TestPass123!"
+        )
+
+        # Create an instructor and a facility
+        self.instructor = Instructor.objects.create(name="John Doe")
+        self.facility = Facilitie.objects.create(
+            name="Studio", max_capacity=15
+        )
+
+        # Create a test class
+        self.test_class = Class.objects.create(
+            name="Yoga Class",
+            description="A relaxing yoga session.",
+            instructor=self.instructor,
+            facility=self.facility,
+            start_time="2025-12-01T10:00",
+            end_time="2025-12-01T11:00",
+            repeat_schedule="weekly"
+        )
+
+        # Define the URL for editing the class
+        self.edit_class_url = reverse("edit_class", args=[self.test_class.id])
