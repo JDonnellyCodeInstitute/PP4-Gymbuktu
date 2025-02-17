@@ -324,3 +324,28 @@ class TestAddClassView(TestCase):
         self.assertTrue(any(
             "Class added successfully!" in msg.message for msg in messages
         ))
+
+    def test_invalid_form_submission_fails(self):
+        """Ensure an invalid form submission does not create a class."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        form_data = {
+            "name": "",  # Name is required
+            "description": "Missing required fields test",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": "2025-12-01T10:00",
+            "end_time": "2025-12-01T09:00",  # End time before start time
+            "repeat_schedule": "weekly"
+        }
+        response = self.client.post(self.add_class_url, form_data)
+
+        # Verify class was NOT created
+        self.assertEqual(Class.objects.count(), 0)
+
+        # Ensure form contains errors
+        self.assertFormError(
+            response, "form", "name", "This field is required."
+        )
+        self.assertFormError(
+            response, "form", None, "The class start must be before the end."
+        )
