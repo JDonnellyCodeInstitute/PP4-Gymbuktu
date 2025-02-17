@@ -298,3 +298,29 @@ class TestAddClassView(TestCase):
         self.assertRedirects(
             response, f"{reverse('login')}?next={self.add_class_url}"
         )
+
+    def test_staff_can_add_class(self):
+        """Ensure staff users can successfully add a class."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        form_data = {
+            "name": "Yoga Class",
+            "description": "A relaxing yoga session.",
+            "instructor": self.instructor.id,
+            "facility": self.facility.id,
+            "start_time": "2025-12-01T10:00",
+            "end_time": "2025-12-01T11:00",
+            "repeat_schedule": "weekly"
+        }
+        response = self.client.post(self.add_class_url, form_data, follow=True)
+
+        # Verify class was created
+        self.assertEqual(Class.objects.count(), 1)
+        new_class = Class.objects.first()
+        self.assertEqual(new_class.name, "Yoga Class")
+
+        # Verify redirect and success message
+        self.assertRedirects(response, reverse("manage_classes"))
+        messages = list(response.context["messages"])
+        self.assertTrue(any(
+            "Class added successfully!" in msg.message for msg in messages
+        ))
