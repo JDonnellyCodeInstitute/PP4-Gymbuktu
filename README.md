@@ -320,6 +320,25 @@ ERD for database connectivity as per below. Note: The maximum capacity in the cl
     Django has its own automatic logout setting in settings.py which I have used in conjunction with a small piece of javascript to smoothly log users out in real time without them having to refresh the page.
     Javascript can be found here - static\js\auto_logout.j
 
+## Agile Approach in GymBukTu
+
+The development of GymBukTu followed key Agile principles to keep the project structured and manageable.
+
+- The aim was to reach a Minimum Viable Product (MVP) first, ensuring that core features — user authentication, class bookings, and profile management—were functional before adding extra features.  
+- User stories were created and tracked to keep development focused on what users actually needed, such as an easy way to book, cancel, and view their classes.  
+- The project maintained a user-centric approach, with adjustments made based on usability feedback to improve navigation, mobile responsiveness, and workflow clarity.  
+- Test automation was incorporated as the primary method of testing, covering core functionality and reducing manual effort. Some manual testing was also done to check the user experience and ensure everything worked as expected.  
+
+While not every Agile practice was followed strictly, the focus on incremental progress, user needs, and testing helped keep development efficient and on track.
+
+### Future Features / Nice to Haves
+
+In line with the aforementioned agile principle of prioritising the minimum viable product there were several nice-to-have user stories that didn't make it into the sprint that was this project's development. Hopefully, they'll be completed at a later date:
+
+  - Waitlists - For full classes that you'd like to put yourself down as first refusal for. A user would receive an email and have a limited time to confirm acceptance of the booking.
+  - Notifications - Automated emails a user would receive upon booking a class, these emails could automatically update the recipient's calendar. They could be set as a reminder the day before a class.
+  - Feedback and reviews - A more comprehensive review process specific to individual classes and instructors.
+
 ## PEP8 Compliance
 
 PEP8 compliance for each major directory is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
