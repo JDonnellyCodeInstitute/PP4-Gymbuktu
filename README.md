@@ -273,6 +273,52 @@ ERD for database connectivity as per below. Note: The maximum capacity in the cl
 ### Sign-Up
 
 - Users can sign-up / register easily using django's inbuilt signup functionality, new users will receive an email with a verification link they'll have to follow before they can access login required functionality.
+- The user will then be directed to the login page.
+
+![sign-up](static\images\readme\features\signup.png)
+![verification-email](static\images\readme\features\verify-account.png)
+
+- The sign up page is fully responsive.
+
+![sign-up-responsive](static\images\readme\features\signup-small.png)
+
+### Log In
+
+- As with the signup functionality the login is built on django's existing capability.
+- Users will only be allowed to login once their account has been verified.
+
+![login](static\images\readme\features\login.png)
+![login-responsive](static\images\readme\features\login-responsive.png)
+
+### Lost / Forgotten Password Reset
+
+- As above, this site uses django's password reset functionality to facilitate our users if their password is lost, forgotten, or compromised.
+- The user receives an email with a password reset link which they can follow and reset their password.
+
+![reset-pw](static\images\readme\features\password-reset.png)
+![reset-pw-responsive](static\images\readme\features\reset-pw-responsive.png)
+![reset-pw-email](static\images\readme\features\pw-rset-email.png)
+![update-pw](static\images\readme\features\setpw.png)
+
+### Automated Processes
+
+- There are several automated processes that run without anyone noticing but are important to the site functionality:
+
+  1. Generate Recurring Classes - classes\management\commands\generate_recurring_classes.py
+
+    This method is written such that it will only take action on the first day of the month. It looks at all classes due to take place on the date that it runs and recreates each one 30 times but for one day later than the previous.
+    This way the kind and generous folk at codeinstitute do not have to waste time creating classes themselves to test the site.
+    The reason the method is written to technically run every day but only take action on the first of the month is because we're using Heroku's scheduler functionality which can only run in shorter intervals - the longest being a day - so the function is ran every day.
+
+  2. Mark Completed Classes - classes\management\commands\mark_completed_classes.py
+
+    Although its relatively easy to update the appearance of a class in the template with an if statement - so it says 'Hot Yoga - Complete' etc. on the Classes page, it is less easy to update the class model to mark them as complete. To combat this I set up the management command mark completed classes.
+    This one runs every ten minutes and marks all classes past their end time as complete.
+
+  3. Automatic Logouts
+
+    Django has its own automatic logout setting in settings.py which I have used in conjunction with a small piece of javascript to smoothly log users out in real time without them having to refresh the page.
+    Javascript can be found here - static\js\auto_logout.j
 
 ## PEP8 Compliance
 
