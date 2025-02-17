@@ -385,3 +385,21 @@ class TestEditClassView(TestCase):
 
         # Define the URL for editing the class
         self.edit_class_url = reverse("edit_class", args=[self.test_class.id])
+
+    def test_staff_can_access_edit_class_page(self):
+        """Ensure staff users can access the edit class form."""
+        self.client.login(username="staffuser", password="TestPass123!")
+        response = self.client.get(self.edit_class_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "classes/class_form.html")
+        self.assertIsInstance(response.context["form"], ClassForm)
+        self.assertEqual(response.context["form"].instance, self.test_class)
+
+    def test_non_staff_redirected_from_edit_class_page(self):
+        """Ensure non-staff users are redirected
+        when trying to access edit class."""
+        self.client.login(username="testuser", password="TestPass123!")
+        response = self.client.get(self.edit_class_url)
+        self.assertRedirects(
+            response, f"{reverse('login')}?next={self.edit_class_url}"
+        )
