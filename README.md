@@ -272,7 +272,7 @@ ERD for database connectivity as per below. Note: The maximum capacity in the cl
 
 ### Sign-Up
 
-- Users can sign-up / register easily using django's inbuilt signup functionality
+- Users can sign-up / register easily using django's inbuilt signup functionality, new users will receive an email with a verification link they'll have to follow before they can access login required functionality.
 
 ## PEP8 Compliance
 

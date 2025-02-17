@@ -9,13 +9,13 @@
             <h2 class="text-center mb-4">Login</h2>
 
             <!-- Login Form -->
-            <form method="POST">
+            <form method="POST" class="d-flex flex-column align-items-center">
                 {% csrf_token %}
-                <div class="mb-3">
+                <div class="mb-3 w-100 text-center">
                     <label for="id_username" class="form-label">Username</label>
                     {{ form.username }}
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 w-100 text-center">
                     <label for="id_password" class="form-label">Password</label>
                     {{ form.password }}
                 </div>
@@ -26,6 +26,7 @@
             <div class="text-center mt-3">
                 <a href="{% url 'password_reset' %}" class="text-muted">Forgot Password?</a>
             </div>
+
             <!-- Sign up link -->
             <div class="text-center mt-3">
                 <p>Don't have an account?</p>
