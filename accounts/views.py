@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils.timezone import now
 from .forms import SignUpForm, CustomLoginForm
 from classes.models import Booking, User
 from django.core.mail import send_mail
@@ -141,9 +142,16 @@ def already_verified(request):
 @login_required
 def profile(request):
     """Displays the user's profile with their bookings."""
+    # Only show bookings for classes that haven't ended
     current_bookings = Booking.objects.filter(
-        user=request.user, class_status=0)
-    past_bookings = Booking.objects.filter(user=request.user, class_status=2)
+        user=request.user,
+        gym_class__end_time__gt=now()
+    )
+    # Move finished classes to past bookings
+    past_bookings = Booking.objects.filter(
+        user=request.user,
+        gym_class__end_time__lte=now()
+    )
 
     return render(
         request,
