@@ -3,23 +3,23 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center pt-5">
-    <div class="col-10 col-md-6 col-lg-4">
+<div class="container d-flex justify-content-center align-items-center pt-5">
+    <div class="col-md-6 col-lg-4">
         <div class="card shadow p-4">
             <h2 class="text-center mb-4">Login</h2>
 
             <!-- Login Form -->
-            <form method="POST" class="d-flex flex-column align-items-center">
+            <form method="POST" class="d-flex flex-column align-items-center w-100">
                 {% csrf_token %}
-                <div class="mb-3 w-100 text-center">
-                    <label for="id_username" class="form-label">Username</label>
-                    {{ form.username }}
+                <div class="mb-3 w-100">
+                    <label for="id_username" class="form-label text-start">Username</label>
+                    <input type="text" class="form-control" id="id_username" name="username">
                 </div>
-                <div class="mb-3 w-100 text-center">
-                    <label for="id_password" class="form-label">Password</label>
-                    {{ form.password }}
+                <div class="mb-3 w-100">
+                    <label for="id_password" class="form-label text-start">Password</label>
+                    <input type="password" class="form-control" id="id_password" name="password">
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-primary w-auto px-4">Login</button>
             </form>
 
             <!-- Forgot Password Link -->
@@ -30,7 +30,7 @@
             <!-- Sign up link -->
             <div class="text-center mt-3">
                 <p>Don't have an account?</p>
-                <a href="{% url 'signup' %}" class="btn btn-outline-secondary">Sign Up</a>
+                <a href="{% url 'signup' %}" class="btn btn-outline-secondary">Sign up here</a>
             </div>
         </div>
     </div>
