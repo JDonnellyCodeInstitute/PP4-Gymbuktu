@@ -146,8 +146,15 @@
 ---
 This structured approach ensures GymBukTu provides a smooth and efficient user experience while maintaining clarity and ease of use for both gym members and administrators.
 
+## ERD
+
+ERD for database connectivity as per below. Note: The maximum capacity in the class model is limited to the capacity of the facility the class is being held in.
+
+![SCHEMA](static\images\readme\erd\erd-schema.png)
+![ERD](static\images\readme\erd\ERD.png)
+
 ## PEP8 Compliance
 
 PEP8 compliance for each app is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
 
-![ALL](static\images\readme\lighthouse\pep8-all.png)
+![ALL](static\images\readme\pep8\pep8-all.png)
