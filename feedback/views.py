@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Feedback
 from .forms import FeedbackForm
 
+
 @login_required
 def feedback_view(request):
     if request.method == "POST":
@@ -15,9 +16,14 @@ def feedback_view(request):
     else:
         form = FeedbackForm()
 
-    feedback_entries = Feedback.objects.filter(user=request.user).order_by("-timestamp")
+    feedback_entries = Feedback.objects.filter(
+        user=request.user).order_by("-timestamp")
 
-    return render(request, "feedback/feedback_form.html", {"form": form, "feedback_entries": feedback_entries})
+    return render(
+        request,
+        "feedback/feedback_form.html",
+        {"form": form, "feedback_entries": feedback_entries}
+    )
 
 
 def feedback_received(request):

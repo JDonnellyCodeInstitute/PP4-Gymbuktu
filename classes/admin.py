@@ -10,7 +10,14 @@ class InstructorAdmin(admin.ModelAdmin):
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
-    list_display = ('name', 'instructor', 'start_time', 'end_time', 'facility', 'class_status')
+    list_display = (
+        'name',
+        'instructor',
+        'start_time',
+        'end_time',
+        'facility',
+        'class_status'
+    )
     search_fields = ('name', 'instructor', 'facility__name')
     list_filter = ('start_time', 'facility')
 

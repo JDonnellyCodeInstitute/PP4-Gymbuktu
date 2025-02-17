@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Facilitie(models.Model):
     name = models.CharField(max_length=20)
     location = models.CharField(max_length=20)

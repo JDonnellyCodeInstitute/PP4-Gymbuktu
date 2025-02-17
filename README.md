@@ -88,11 +88,8 @@
   - The system provides a responsive, mobile-friendly user experience.
 
 
-Code for later:
-Testimonial image src:
-{% static 'images/gym-goer-1.jpg' %}
-{% static 'images/gym-goer-2.jpg' %}
-{% static 'images/gym-goer-3.jpg' %}
+## PEP8 Compliance
 
-NavBar HREFs:
-{% url 'classes' %}
+PEP8 compliance for each app is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
+
+![ALL](static\images\readme\lighthouse\pep8-all.png)
