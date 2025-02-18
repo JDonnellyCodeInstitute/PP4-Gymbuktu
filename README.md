@@ -10,10 +10,10 @@ Welcome to Gymbuktu, a modern gym that offers an array of classes as well as tre
 
   The purpose of this project is to develop a gym booking system that enables gym members to book, manage, and cancel classes conveniently. It will also provide gym administrators with tools to manage class schedules and attendance efficiently.
 
-### 2. Target Audience  
+### 2. Target Audience
 
-    - Primary Users: Gym members seeking a user-friendly platform to book classes, view schedules, and manage their bookings.
-    - Secondary Users: Gym administrators or staff responsible for overseeing class management and attendance.
+  - Primary Users: Gym members seeking a user-friendly platform to book classes, view schedules, and manage their bookings.
+  - Secondary Users: Gym administrators or staff responsible for overseeing class management and attendance.
 
 ### 3. Core Feature Areas  
 
@@ -333,7 +333,7 @@ The development of GymBukTu followed Agile principles to ensure the project was 
 ### **Project Planning & Prioritization**
 - The **Minimum Viable Product (MVP)** was prioritized first, ensuring that user authentication, class bookings, and profile management were implemented before expanding functionality.
 - User stories were created and tracked in GitHub to keep development focused on what users actually needed, such as an easy way to book, cancel, and view their classes.
-- Given GitHub's limitations as an Agile ticket management system, the **Project Scope  & Feature Overview** section in the README was created at the start of development. This section serves as a **high-level epic breakdown**, outlining the key principles and objectives of the project.
+- Given GitHub's limitations as an Agile ticket management system, the **Project Scope & Feature Overview** section in the README was created at the start of development. This section serves as a **high-level epic breakdown**, outlining the key principles and objectives of the project.
 - From these epics, user stories were derived and prioritized based on their importance in achieving the MVP.
 
 ### **Tracking User Story Prioritization**
@@ -341,7 +341,10 @@ The development of GymBukTu followed Agile principles to ensure the project was 
   - **Must Have** – Essential for core functionality.  
   - **Should Have** – Important but not essential to launch.  
   - **Nice to Have** – Features that enhance user experience but are not required.  
-- Given the relatively small size of the user stories, acceptance criteria often aligned closely with individual tasks rather than needing further task breakdowns.
+- Given the relatively small size of the user stories, acceptance criteria often aligned closely with individual tasks, below are the completed tasks based on user story acceptance criteria.
+
+![Task Breakdown](static\images\readme\agile\task-breakdown.png)
+
 - The completed functionality heavily prioritizes "Must Have" stories, with only a small percentage of "Should Have" features included and no "Nice to Haves" completed within the project timeline.
 
 ### **User Story Refinement & Implementation Evidence**
@@ -517,7 +520,7 @@ JavaScript code passes validation as per below
 - Django Documentation: [ManagementCommands](https://docs.djangoproject.com/en/5.1/howto/custom-management-commands/)
 - DBML: [SchemaCreation](https://dbdiagram.io/d)
 - Pexels: [HeroImage](https://www.pexels.com/)
-- PureGym: [StructureAndLayouInspiration](https://www.puregym.com/)
+- PureGym: [StructureAndLayoutInspiration](https://www.puregym.com/)
 - Codemy: [ExcellentCodeInstructorYouTube](https://www.youtube.com/@Codemycom)
 - HaydnCo: [BootstrapCardsExplainer](https://www.youtube.com/watch?v=PwEvMY7nnY8)
 
