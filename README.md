@@ -333,7 +333,7 @@ The development of GymBukTu followed Agile principles to ensure the project was 
 ### **Project Planning & Prioritization**
 - The **Minimum Viable Product (MVP)** was prioritized first, ensuring that user authentication, class bookings, and profile management were implemented before expanding functionality.
 - User stories were created and tracked in GitHub to keep development focused on what users actually needed, such as an easy way to book, cancel, and view their classes.
-- Given GitHub's limitations as an Agile ticket management system, the **Project Scope** section in the README was created at the start of development. This section serves as a **high-level epic breakdown**, outlining the key principles and objectives of the project.
+- Given GitHub's limitations as an Agile ticket management system, the **Project Scope  & Feature Overview** section in the README was created at the start of development. This section serves as a **high-level epic breakdown**, outlining the key principles and objectives of the project.
 - From these epics, user stories were derived and prioritized based on their importance in achieving the MVP.
 
 ### **Tracking User Story Prioritization**
@@ -351,7 +351,7 @@ Below is a snapshot of our **GitHub Agile Board**, illustrating the breakdown of
 
 ### **Ensuring "Should-Have" Features ≤ 60% of Total Work**
 - As per Agile best practices, "Should-Have" user stories should not exceed 60% of total estimated work.
-- In GymBukTu, the majority of completed features are Must Haves, while only a few Should Haves were included.
+- In GymBukTu, the majority of completed features are Must Haves, while only a few "Should Haves" were included.
 - "Nice to Have" features were deliberately left to last and therefore left out to maintain focus on MVP delivery.
 
 ### **User-Centric Development & Testing**
@@ -415,7 +415,14 @@ Automated testing was implemented to verify core functionalities in GymBukTu, fo
 
 Most of the testing was automated to cover critical functionality, while manual testing was conducted for UI interactions, responsiveness, and usability.
 
-### **Manual Tests to Cover Remaining Areas**
+### **Automated Test Suite Passes**
+
+ - 65 Tests included in regression suite so far
+ - One minor warning relating to timezone data, not an error and not required to be fixed for successful suite run.
+
+![AutomatedTestRun](static\images\readme\test-suite\test-suite.png)
+
+### **Manual Tests Completed to Cover Remaining Areas**
 To ensure appropriate coverage, the following manual tests have been conducted:
 - Verify that users cannot book a class that is already at maximum capacity.
 - Ensure users cannot book the same class twice.
@@ -424,6 +431,7 @@ To ensure appropriate coverage, the following manual tests have been conducted:
 - Confirm that mobile responsiveness and layout consistency work as expected.
 - Confirm that email notifications (booking confirmation, cancellations, etc.) are received correctly.
 - Confirmed that all links across the site work as expected.
+- Tests have been completed across different browsers and devices.
 
 ### PEP8 Compliance
 
