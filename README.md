@@ -350,7 +350,51 @@ In line with the aforementioned agile principle of prioritising the minimum viab
   - **FIX** Date and time was not displaying on class_list or class_detail. Have updated to draw from start_time.date/time rather than generic date / time to fix
   - **FIX** Individual users should only be able to book themselves into the same class once. This was implemented by adding an if statement to a variable existing_booking in the book class view
 
-## PEP8 Compliance
+## Testing
+
+Automated testing was implemented to verify core functionalities in GymBukTu, focusing on user authentication, bookings, and access control. Below is a summary of the tests that were written and included in the project.
+
+### **Automated Tests**
+- **User Authentication Tests**
+  - Valid sign-ups are accepted, and invalid ones (missing username, email, or passwords) are rejected.
+  - Ensures username uniqueness and validates email format.
+  - Confirms login works with correct credentials and fails with incorrect ones.
+  - Tests that inactive users cannot log in before email verification.
+  - Validates that a password reset email is sent for existing accounts.
+
+- **Booking System Tests**
+  - Users can successfully book a class.
+  - Users can cancel upcoming bookings but cannot cancel past bookings.
+  - Past bookings are correctly displayed in the **past bookings** section.
+
+- **Profile Page Tests**
+  - Ensures bookings are displayed in the correct section (current or past).
+  - The cancel button only appears for upcoming classes.
+
+- **Email Verification Tests**
+  - A verification token is created and sent upon signup.
+  - Users cannot log in until they verify their email.
+  - The verification link activates the account.
+  - Expired or invalid tokens return an error.
+
+- **Permissions and Access Control Tests**
+  - Non-admin users cannot access class management features.
+  - Users cannot modify or cancel bookings that belong to others.
+  - Only authenticated users can make bookings.
+
+Most of the testing was automated to cover critical functionality, while manual testing was conducted for UI interactions, responsiveness, and usability.
+
+### **Manual Tests to Cover Remaining Areas**
+To ensure full coverage, the following manual tests have been conducted:
+- Verify that users cannot book a class that is already at maximum capacity.
+- Ensure users cannot book the same class twice.
+- Feedback submission system works correctly.
+- Ensured the UI correctly updates when bookings are made and canceled.
+- Confirm that mobile responsiveness and layout consistency work as expected.
+- Confirm that email notifications (booking confirmation, cancellations, etc.) are received correctly.
+- Confirmed that all links across the site work as expected.
+
+### PEP8 Compliance
 
 PEP8 compliance for each major directory is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
 
