@@ -339,6 +339,14 @@ In line with the aforementioned agile principle of prioritising the minimum viab
   - Notifications - Automated emails a user would receive upon booking a class, these emails could automatically update the recipient's calendar. They could be set as a reminder the day before a class.
   - Feedback and reviews - A more comprehensive review process specific to individual classes and instructors.
 
+## Bugs
+
+  - **FIX** Profile view was mishandled the completed booking data so bookings weren't moving over to the past booking section. Now corrected
+  - **FIX** Login required added to class_detail view. Previously site allowed the user to 'book a class' getting confirmation but would then be directed to the login screen and the booking wouldnt exist. The UX is improved by preventing the user from getting that far without logging in in the first place
+  - **PERFORMANCE ISSUE ADDRESSED** Manage classes page attemped to load all classes at once causing performance issues, these are now filtered by date and default to today's classes
+  - **ENHANCEMENT** updated the cancel_booking view to navigate the user back to the profile page if thats where they cancelled the class from for better UX
+  - **FIX** When a user attempts to double book themself in overlapping classes the system throws an error, now instead of incurring a 500 error which is terrible UX, the booking_confirmation template displays the error and improves the user experience
+
 ## PEP8 Compliance
 
 PEP8 compliance for each major directory is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
