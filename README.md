@@ -322,33 +322,58 @@ ERD for database connectivity as per below. Note: The maximum capacity in the cl
 
 ## Agile Approach in GymBukTu
 
-The development of GymBukTu followed key Agile principles to keep the project structured and manageable.
+The development of GymBukTu followed Agile principles to ensure the project was structured, manageable, and aligned with user needs.
 
-- The aim was to reach a Minimum Viable Product (MVP) first, ensuring that core features — user authentication, class bookings, and profile management—were functional before adding extra features.  
-- User stories were created and tracked to keep development focused on what users actually needed, such as an easy way to book, cancel, and view their classes.  
-- The project maintained a user-centric approach, with adjustments made based on usability feedback to improve navigation, mobile responsiveness, and workflow clarity.  
-- Test automation was incorporated as the primary method of testing, covering core functionality and reducing manual effort. Some manual testing was also done to check the user experience and ensure everything worked as expected.  
+### **Project Planning & Prioritization**
+- The **Minimum Viable Product (MVP)** was prioritized first, ensuring that user authentication, class bookings, and profile management were implemented before expanding functionality.
+- User stories were created and tracked in GitHub to keep development focused on what users actually needed, such as an easy way to book, cancel, and view their classes.
+- Given GitHub's limitations as an Agile ticket management system, the **Project Scope** section in the README was created at the start of development. This section serves as a **high-level epic breakdown**, outlining the key principles and objectives of the project.
+- From these epics, user stories were derived and prioritized based on their importance in achieving the MVP.
 
-While not every Agile practice was followed strictly, the focus on incremental progress, user needs, and testing helped keep development efficient and on track.
+### **Tracking User Story Prioritization**
+- User stories were categorized based on priority labels:  
+  - **Must Have** – Essential for core functionality.  
+  - **Should Have** – Important but not essential to launch.  
+  - **Nice to Have** – Features that enhance user experience but are not required.  
+- Given the relatively small size of the user stories, acceptance criteria often aligned closely with individual tasks rather than needing further task breakdowns.
+- The completed functionality heavily prioritizes "Must Have" stories, with only a small percentage of "Should Have" features included and no "Nice to Haves" completed within the project timeline.
 
-### Future Features / Nice to Haves
+### **User Story Refinement & Implementation Evidence**
+Below is a snapshot of our **GitHub Agile Board**, illustrating the breakdown of user stories and their completion status:
 
-In line with the aforementioned agile principle of prioritising the minimum viable product there were several nice-to-have user stories that didn't make it into the sprint that was this project's development. Hopefully, they'll be completed at a later date:
+![Agile Board](static/images/readme/agile/agile-board.png)
 
-  - Waitlists - For full classes that you'd like to put yourself down as first refusal for. A user would receive an email and have a limited time to confirm acceptance of the booking.
-  - Notifications - Automated emails a user would receive upon booking a class, these emails could automatically update the recipient's calendar. They could be set as a reminder the day before a class.
-  - Feedback and reviews - A more comprehensive review process specific to individual classes and instructors.
+### **Ensuring "Should-Have" Features ≤ 60% of Total Work**
+- As per Agile best practices, "Should-Have" user stories should not exceed 60% of total estimated work.
+- In GymBukTu, the majority of completed features are Must Haves, while only a few Should Haves were included.
+- "Nice to Have" features were deliberately left to last and therefore left out to maintain focus on MVP delivery.
 
-## Bugs
+### **User-Centric Development & Testing**
+- The project followed a user-first approach, refining navigation, mobile responsiveness, and workflow clarity based on usability feedback.
+- Automated testing was the primary method used to validate core functionalities, with manual testing supplementing areas such as UI interactions and mobile responsiveness.
 
-  - **FIX** Profile view mishandled the completed booking data so bookings weren't moving over to the past booking section. Now corrected
-  - **FIX** Login required added to class_detail view. Previously site allowed the user to 'book a class' getting confirmation but would then be directed to the login screen and the booking wouldnt exist. The UX is improved by preventing the user from getting that far without logging in in the first place
-  - **PERFORMANCE ISSUE ADDRESSED** Manage classes page attemped to load all classes at once causing performance issues, these are now filtered by date and default to today's classes
-  - **ENHANCEMENT** updated the cancel_booking view to navigate the user back to the profile page if thats where they cancelled the class from for better UX
-  - **FIX** When a user attempts to double book themself in overlapping classes the system throws an error, now instead of incurring a 500 error which is terrible UX, the booking_confirmation template displays the error and improves the user experience
-  - **DOUBLE FIX** Defaulted class list to display only today's classes by default, server was attempting to load all classes and nearly crashing. Date filter on the class list page was not working, updated class_list view to correctly format date to fix. Class_list page updated to dynamically display date more effectively
-  - **FIX** Date and time was not displaying on class_list or class_detail. Have updated to draw from start_time.date/time rather than generic date / time to fix
-  - **FIX** Individual users should only be able to book themselves into the same class once. This was implemented by adding an if statement to a variable existing_booking in the book class view
+## **Future Features / Nice to Haves**
+In line with Agile's **MVP-first principle**, several "Nice-to-Have" user stories were not implemented in this development cycle but could be added in future iterations:
+
+- **Waitlists** – Users can join a waitlist for full classes and be notified via email if a spot opens.
+- **Notifications** – Automated email confirmations for bookings that could integrate with users' calendars and include class reminders.
+- **Feedback & Reviews** – A more detailed review system for individual classes and instructors.
+
+These features remain in the backlog and could be introduced in future development cycles based on user demand.
+
+## Bugs  
+
+- **Fixed:** Profile view mishandled completed booking data, preventing past bookings from moving to the past bookings section. This has now been corrected.  
+- **Fixed:** Added login requirement to the `class_detail` view. Previously, users could attempt to book a class without being logged in, receive a confirmation, and then be redirected to the login page—only to find that the booking didn’t exist. Now, users must log in before proceeding to book a class, improving the user experience.  
+- **Performance Issue Addressed:** The **Manage Classes** page previously attempted to load all classes at once, causing performance issues. It now filters by date and defaults to displaying only today’s classes.  
+- **Enhancement:** Improved the `cancel_booking` view so that if a user cancels a class from the profile page, they are navigated back to the profile page instead of being redirected elsewhere.  
+- **Fixed:** When a user attempted to book themselves into overlapping classes, the system previously threw a **500 error**. This has been resolved by handling the error properly in the `booking_confirmation` template, displaying a user-friendly message instead.  
+- **Double Fix:**  
+  - The **Class List** page now defaults to showing only today’s classes instead of attempting to load all classes at once, which was causing server performance issues.  
+  - The **date filter** on the Class List page was not working correctly. The `class_list` view has been updated to properly format the date and apply the filter.  
+  - The Class List page now dynamically displays the selected date more effectively.  
+- **Fixed:** Date and time were not displaying correctly on `class_list` and `class_detail` pages. The views were updated to pull from `start_time.date` and `start_time.time`, resolving the issue.  
+- **Fixed:** Users were able to book themselves into the same class multiple times. This was addressed by adding a check in the `book_class` view to prevent duplicate bookings.  
 
 ## Testing
 
