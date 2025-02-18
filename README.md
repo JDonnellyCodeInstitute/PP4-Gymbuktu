@@ -385,7 +385,7 @@ Automated testing was implemented to verify core functionalities in GymBukTu, fo
 Most of the testing was automated to cover critical functionality, while manual testing was conducted for UI interactions, responsiveness, and usability.
 
 ### **Manual Tests to Cover Remaining Areas**
-To ensure full coverage, the following manual tests have been conducted:
+To ensure appropriate coverage, the following manual tests have been conducted:
 - Verify that users cannot book a class that is already at maximum capacity.
 - Ensure users cannot book the same class twice.
 - Feedback submission system works correctly.
