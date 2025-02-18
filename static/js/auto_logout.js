@@ -1,4 +1,4 @@
-// Auto Logout Timer (90 seconds for testing)
+// Auto Logout Timer
 let logoutTimer;
 
 function resetLogoutTimer() {

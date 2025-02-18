@@ -424,3 +424,76 @@ To ensure appropriate coverage, the following manual tests have been conducted:
 PEP8 compliance for each major directory is confirmed below excluding migration and venv code, and the env import in settings.py for hosting the server in development.
 
 ![ALL](static\images\readme\pep8\pep8-all.png)
+
+### HTML Validation
+
+HTML code passes validation as per below
+
+[AddClass](static\images\readme\validation\addclass.png)
+[ClassDetail](static\images\readme\validation\class_details.png)
+[Classes](static\images\readme\validation\classes.png)
+[Delete](static\images\readme\validation\delete.png)
+[Edit](static\images\readme\validation\edit.png)
+[Feedback](static\images\readme\validation\feedback.png)
+[Home](static\images\readme\validation\home.png)
+[Logout](static\images\readme\validation\logout.png)
+[ManageAttendance](static\images\readme\validation\manageattendance.png)
+[ManageClasses](static\images\readme\validation\manageclasses.png)
+[Profile](static\images\readme\validation\profile.png)
+[ResetPassword](static\images\readme\validation\reset-password.png)
+[SignUp](static\images\readme\validation\signup.png)
+
+### CSS Validation
+
+CSS Code passes validation as per below
+
+[CSS](static\images\readme\validation\css.png)
+
+### JS Validation
+
+JavaScript code passes validation as per below
+
+[JSS](static\images\readme\validation\JSHint.png)
+
+### Lighthouse Checks on Main Pages
+
+[class-detail](static\images\readme\lighthouse\class-detail.png)
+[class-detail-mobile](static\images\readme\lighthouse\classdetail-mobile.png)
+[classes](static\images\readme\lighthouse\classes.png)
+[classes-mobile](static\images\readme\lighthouse\classes-mobile.png)
+[feedback](static\images\readme\lighthouse\feedback.png)
+[feedback-mobile](static\images\readme\lighthouse\feedback-mobile.png)
+[home](static\images\readme\lighthouse\home-desktop.png)
+[home-mobile](static\images\readme\lighthouse\home-mobile.png)
+[login](static\images\readme\lighthouse\login.png)
+[login-mobile](static\images\readme\lighthouse\loginmobile.png)
+[manage-classes](static\images\readme\lighthouse\manageclasses.png)
+[manage-classes-mobile](static\images\readme\lighthouse\manageclasses-mobile.png)
+[profile](static\images\readme\lighthouse\profile.png)
+[profile-mobile](static\images\readme\lighthouse\profile-mobile.png)
+[signup](static\images\readme\lighthouse\signup.png)
+[signup-mobile](static\images\readme\lighthouse\signupmobile.png)
+
+### Deployment Steps
+
+## Deployment
+
+  - Steps for deployment:
+    - Fork or clone this repository
+    - Create a new Heroku app
+    - Set the buildbacks to Python and NodeJS in that order
+    - Link the Heroku app to the repository including config var inputs
+      - Configuration variables required include:
+        - SECRET_KEY
+        - DATABASE-URL
+        - CLOUDINARY_API_KEY
+        - CLOUDINARY_API_SECRET
+        - CLOUDINARY_CLOUD_NAME
+        - CLOUDINARY_URL
+        - EMAIL_PASSWORD
+        - EMAIL_USER
+    - Click on Deploy
+    - Once deployed, run migrations and collect static files to prepare database and assets
+    - Ensure at least one dyno is runnning
+    - Updates can be pushed via git as required
+    - Logs can be checked via `heroku logs --tail`
