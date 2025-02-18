@@ -341,11 +341,14 @@ In line with the aforementioned agile principle of prioritising the minimum viab
 
 ## Bugs
 
-  - **FIX** Profile view was mishandled the completed booking data so bookings weren't moving over to the past booking section. Now corrected
+  - **FIX** Profile view mishandled the completed booking data so bookings weren't moving over to the past booking section. Now corrected
   - **FIX** Login required added to class_detail view. Previously site allowed the user to 'book a class' getting confirmation but would then be directed to the login screen and the booking wouldnt exist. The UX is improved by preventing the user from getting that far without logging in in the first place
   - **PERFORMANCE ISSUE ADDRESSED** Manage classes page attemped to load all classes at once causing performance issues, these are now filtered by date and default to today's classes
   - **ENHANCEMENT** updated the cancel_booking view to navigate the user back to the profile page if thats where they cancelled the class from for better UX
   - **FIX** When a user attempts to double book themself in overlapping classes the system throws an error, now instead of incurring a 500 error which is terrible UX, the booking_confirmation template displays the error and improves the user experience
+  - **DOUBLE FIX** Defaulted class list to display only today's classes by default, server was attempting to load all classes and nearly crashing. Date filter on the class list page was not working, updated class_list view to correctly format date to fix. Class_list page updated to dynamically display date more effectively
+  - **FIX** Date and time was not displaying on class_list or class_detail. Have updated to draw from start_time.date/time rather than generic date / time to fix
+  - **FIX** Individual users should only be able to book themselves into the same class once. This was implemented by adding an if statement to a variable existing_booking in the book class view
 
 ## PEP8 Compliance
 
