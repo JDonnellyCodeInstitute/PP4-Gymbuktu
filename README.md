@@ -4,92 +4,83 @@ Welcome to Gymbuktu, a modern gym that offers an array of classes as well as tre
 
 ![MOCK](static\images\readme\mock-up\all-devices-black.png)
 
-## Project Scope
+## Project Scope & Feature Overview  
 
-1. Purpose
+### 1. Purpose  
 
   The purpose of this project is to develop a gym booking system that enables gym members to book, manage, and cancel classes conveniently. It will also provide gym administrators with tools to manage class schedules and attendance efficiently.
 
-2. Target Audience
+### 2. Target Audience  
 
     - Primary Users: Gym members seeking a user-friendly platform to book classes, view schedules, and manage their bookings.
     - Secondary Users: Gym administrators or staff responsible for overseeing class management and attendance.
 
-3. Scope of Features
+### 3. Core Feature Areas  
 
-  - 3.1 Minimum Viable Product (MVP)
+To structure development, the system is divided into core feature areas that align with the **minimum viable product (MVP)** while allowing for future enhancements.  
 
-  The following features are essential for the system:
+#### **3.1 Essential Features (MVP - Must Have)**  
 
-  - User Management:
+These features form the foundation of the system and were prioritized during development:  
 
+- **User Management:** 
     - Member registration and login functionality with email verification.
     - Secure user authentication leveraging Django’s built-in features.
 
-  - Booking System:
-
+- **Booking System:**
     - Browse and search for available gym classes.
     - Book a class with available slots.
     - Cancel bookings.
     - View personal booking history.
 
-  - Class Management:
-
+- **Class Management:** 
     - Admin functionality to add, edit, and delete gym classes.
     - Admin tools to manage class bookings and attendance.
 
-  - Schedules:
-
+- **Schedules & User Access:**  
     - Calendar or list view displaying gym classes for users.
 
-  - 3.2 Nice-to-Have Features
+#### **3.2 Potential Enhancements (Should Have & Nice to Have)**  
 
-  These features are not critical but will enhance the system’s value if implemented:
+Additional features that were considered but not necessarily implemented in the initial development cycle:  
 
-  - Waitlists:
-
+- **Waitlists:** 
     - Allow users to join a waitlist if a class is full.
 
-  - Notifications:
-
+- **Notifications:**
     - Email reminders for upcoming classes.
     - Notifications for changes or cancellations.
 
-  - User Reviews and Ratings:
-
+- **User Reviews and Ratings:** 
     - Enable members to rate and review classes or instructors.
 
-  - Mobile-Friendly Enhancements:
-
+- **Mobile-Friendly Enhancements:** 
     - Develop a Progressive Web App (PWA) for better mobile accessibility.
 
-4. Out of Scope
+### 4. Features & Functionality Out of Scope  
 
-  The following features will not be included in this project to prevent scope creep:
+To prevent scope creep, the following features were identified as out of scope:  
 
   - Real-time payment integration.
   - Detailed fitness tracking or health metrics.
   - Multi-gym or franchise-level management capabilities.
 
-5. Technical Constraints
+### 5. Technical Implementation  
 
-  Frontend: The system’s user interface will use Bootstrap to ensure a responsive and consistent design.
+- **Frontend:** Bootstrap ensures a responsive and consistent design.  
+- **Backend:** Django is used for core functionality and scalability.  
+- **Database:** PostgreSQL manages all structured data efficiently.  
+- **Testing:** A mix of automated and manual testing is used for validation.  
+- **Deployment:** The system is deployed on Heroku for accessibility and scalability.  
 
-  Backend: The backend will be built using the Django framework for its robust features and scalability.
-
-  Database: PostgreSQL will be used as the relational database for storing and managing data.
-
-  Testing: Core functionalities (e.g., user management, booking, and admin tools) will undergo a mix of automated and manual testing.
-
-  Deployment: The system will be deployed on the cloud platform Heroku for accessibility and scalability.
-
-6. Success Metrics
+### 6. Success Metrics  
 
   The project will be deemed successful if:
 
   - Gym members can register, log in, and book classes without errors.
   - Administrators can efficiently manage class schedules and bookings.
   - The system provides a responsive, mobile-friendly user experience.
+
 
 ## The Five Planes of User Experience
 
@@ -107,7 +98,7 @@ Welcome to Gymbuktu, a modern gym that offers an array of classes as well as tre
   - User authentication (sign-up, login, logout).
   - Booking system allowing members to book, manage, and cancel classes.
   - Gym administrators can add, edit, and remove classes.
-  - Mobile-friendly design for non-admin users for easy access on various devices.
+  - Mobile-friendly design for easy access on various devices.
   
 - **Additional Features (Should-Haves & Nice-To-Haves):**
   - A waitlist system for fully booked classes.
@@ -130,7 +121,6 @@ Welcome to Gymbuktu, a modern gym that offers an array of classes as well as tre
 - **Mobile-First Approach:**
   - Navigation uses a burger menu for compact mobile usability.
   - Responsive design ensures smooth user experience across devices.
-  - Only exception is the manage classes section where it would be expected that staff with CRUD functionality can only access the system via an onsite computer, not on their personal devices.
 - **User Flow Considerations:**
   - Bookings appear first on the profile page, with past bookings listed below.
   - Successful feedback submission redirects users to a thank-you page for confirmation.
@@ -216,7 +206,7 @@ The data model for GymBukTu is structured to efficiently manage user authenticat
 
 ![HOME-Logged-Out](static\images\readme\features\home-logged-out.png)
 
-- Members of staff who are logged in will see, instead of classes in their nav, manage classes which they can navgate to to update add or delete classes. 
+- Members of staff who are logged in will see, instead of 'Classes' in their nav, 'Manage Classes' which they can navgate to to update add or delete classes. 
 
 ![HOME-Logged-In-Staff-User](static\images\readme\features\home_loggedin_staff.png)
 
@@ -255,18 +245,26 @@ The data model for GymBukTu is structured to efficiently manage user authenticat
 
 ![manage-classes](static\images\readme\features\manage-classes.png)
 ![manage-attendance](static\images\readme\features\manage-attendance.png)
-![edit-class](static\images\readme\features\edit-class.png)
+![edit/add-class(visuallyTheSame)](static\images\readme\features\edit-class.png)
 
 - When a member of staff deletes a class any members booked to attend will receive an email notifying them of the cancellation.
 
 ![delete-class](static\images\readme\features\delete-class.png)
 ![email](static\images\readme\features\cancellation-email.png)
 
+- Each page is responsive. The manage classes page on small screens following suit of the class list and presenting each class on a bootstrap card instead of in the table.
+
+![manage-class-responsive](static\images\readme\features\manage-classes-small.png)
+
 ### Feedback
 
 - Users can provide general feedback and see feedback they have previously submitted.
 
 ![feedback](static\images\readme\features\feedback.png)
+
+- The feedback page is responsive in keeping with the rest of the site.
+
+![feedback-responsive](static\images\readme\features\feedback-small.png)
 
 ### Profile
 
@@ -280,7 +278,7 @@ The data model for GymBukTu is structured to efficiently manage user authenticat
 
 ### Sign-Up
 
-- Users can sign-up / register easily using django's inbuilt signup functionality, new users will receive an email with a verification link they'll have to follow before they can access login required functionality.
+- Users can sign-up / register easily using django's inbuilt signup functionality, new users will receive an email with a verification link they'll have to follow before they can access login-required functionality.
 - The user will then be directed to the login page.
 
 ![sign-up](static\images\readme\features\signup.png)
@@ -316,12 +314,12 @@ The data model for GymBukTu is structured to efficiently manage user authenticat
 
     This method is written such that it will only take action on the first day of the month. It looks at all classes due to take place on the date that it runs and recreates each one 30 times but for one day later than the previous.
     This way the kind and generous folk at codeinstitute do not have to waste time creating classes themselves to test the site.
-    The reason the method is written to technically run every day but only take action on the first of the month is because we're using Heroku's scheduler functionality which can only run in shorter intervals - the longest being a day - so the function is ran every day.
+    The reason the method is written to technically run every day but only take action on the first of the month is because we are using Heroku's scheduler functionality which can only run in shorter intervals - the longest being a day - so the function is ran every day.
 
   2. Mark Completed Classes - classes\management\commands\mark_completed_classes.py
 
-    Although its relatively easy to update the appearance of a class in the template with an if statement - so it says 'Hot Yoga - Complete' etc. on the Classes page, it is less easy to update the class model to mark them as complete. To combat this I set up the management command mark completed classes.
-    This one runs every ten minutes and marks all classes past their end time as complete.
+    Although its relatively easy to update the appearance of a class in the template with an if statement - so it says 'Hot Yoga - Complete' etc. on the Classes page, it is less easy to update the class model to mark them as complete in the database. To combat this I set up the management command mark completed classes.
+    This one runs every ten minutes in the heroku scheduler and marks all classes past their end time as complete.
 
   3. Automatic Logouts
 
