@@ -188,7 +188,15 @@ The gym rules page and additional / connection pages are all laid out roughly th
 
 ## ERD
 
-ERD for database connectivity as per below. Note: The maximum capacity in the class model is limited to the capacity of the facility the class is being held in.
+The data model for GymBukTu is structured to efficiently manage user authentication, class scheduling, and bookings while maintaining data integrity:
+
+- The User model handles account creation and authentication.
+- The Class model represents gym sessions, storing details such as name, description, instructor, facility, and start and end times. 
+- Each class is linked to a Facility model, which defines available gym spaces and their maximum capacity to prevent overbooking. 
+- The Booking model manages user reservations, ensuring that users cannot double-book or enroll in overlapping classes. 
+- Additionally, the Feedback model allows users to submit reviews or comments about their experiences, linking each entry to a specific user.
+- Relationships between these models ensure real-time updates, such as filtering available classes based on capacity, dynamically displaying upcoming and past bookings in the user profile, and storing user-submitted feedback for future improvements.
+- The structure is designed to be scalable, allowing for future enhancements like waitlists and automated notifications with minimal database modifications.
 
 ![SCHEMA](static\images\readme\erd\erd-schema.png)
 ![ERD](static\images\readme\erd\ERD.png)
@@ -497,3 +505,21 @@ JavaScript code passes validation as per below
     - Ensure at least one dyno is runnning
     - Updates can be pushed via git as required
     - Logs can be checked via `heroku logs --tail`
+
+## Credits
+- Code Institute: I think therefore I blog
+- Django Documentation: [ManagementCommands](https://docs.djangoproject.com/en/5.1/howto/custom-management-commands/)
+- DBML: [SchemaCreation](https://dbdiagram.io/d)
+- Pexels: [HeroImage](https://www.pexels.com/)
+- PureGym: [StructureAndLayouInspiration](https://www.puregym.com/)
+- Codemy: [ExcellentCodeInstructorYouTube](https://www.youtube.com/@Codemycom)
+
+
+
+**SIDENOTE CI PLEASE READ**
+
+Midway through development of this project, Code Institute required us to migrate from GitPod to VS Code which I did and am thankful for because its better. However I did have trouble cloning the repo and connecting to the upstream origin, eventually requiring an SSH key to do so. When it eventually worked I got stuck back in to development. Unbeknownst to me every commit I did from that point on was coming from my personal github account which must have been connected to my VS Code from years prior. As per the below screenshot it still appears to me as if I'm logged in with my CI account but the terminal seems to reference my personal account. All this to say this was an accident caused by the migration and is not representative of anything untoward.
+
+Please see the below screenshot indicating the profile to be CI yet the commit to come from:
+
+![GitHubAccount](static\images\readme\sidenote.png)
