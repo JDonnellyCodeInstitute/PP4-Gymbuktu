@@ -513,7 +513,7 @@ JavaScript code passes validation as per below
 - Pexels: [HeroImage](https://www.pexels.com/)
 - PureGym: [StructureAndLayouInspiration](https://www.puregym.com/)
 - Codemy: [ExcellentCodeInstructorYouTube](https://www.youtube.com/@Codemycom)
-
+- HaydnCo: [BootstrapCardsExplainer](https://www.youtube.com/watch?v=PwEvMY7nnY8)
 
 
 **SIDENOTE CI PLEASE READ**

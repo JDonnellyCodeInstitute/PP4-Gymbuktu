@@ -1,51 +1,83 @@
 {% extends "base.html" %}
+
 {% block content %}
 <div class="container mt-4">
-    <h2>Manage Classes</h2>
+    <h2 class="text-center text-md-start">Manage Classes</h2>
 
-    <!-- Date Picker -->
-    <form method="GET" class="mb-3">
-        <label for="date" class="form-label">Select Date:</label>
-        <input type="date" id="date" name="date" class="form-control d-inline w-auto"
+    <!-- Date Picker with Responsive Layout -->
+    <form method="GET" class="mb-3 d-flex flex-column flex-md-row align-items-center gap-2">
+        <label for="date" class="form-label mb-0">Select Date:</label>
+        <input type="date" id="date" name="date" class="form-control w-auto"
                value="{{ selected_date|date:'Y-m-d' }}" onchange="this.form.submit()">
     </form>
 
-    <!-- Show selected date -->
-    <h4 class="mb-3">Classes on {{ selected_date|date:"l, d M Y" }}</h4>
+    <!-- Selected Date Display -->
+    <h4 class="mb-3 text-center text-md-start">Classes on {{ selected_date|date:"l, d M Y" }}</h4>
 
-    <a href="{% url 'add_class' %}" class="btn btn-success mb-3">+ Add New Class</a>
+    <!-- Add New Class Button -->
+    <div class="d-flex justify-content-center justify-content-md-start mb-3">
+        <a href="{% url 'add_class' %}" class="btn btn-success">+ Add New Class</a>
+    </div>
 
-    <table class="table table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Name</th>
-                <th>Instructor</th>
-                <th>Facility</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Attendance</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for data in class_data %}
-            <tr>
-                <td>{{ data.gym_class.name }}</td>
-                <td>{{ data.gym_class.instructor }}</td>
-                <td>{{ data.gym_class.facility }}</td>
-                <td>{{ data.gym_class.start_time }}</td>
-                <td>{{ data.gym_class.end_time }}</td>
-                <td>{{ data.attended_count }}/{{ data.total_bookings }}</td>
-                <td>
+    <!-- Table for Medium+ Screens -->
+    <div class="table-responsive d-none d-md-block">
+        <table class="table table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Instructor</th>
+                    <th>Facility</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Attendance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in class_data %}
+                <tr>
+                    <td>{{ data.gym_class.name }}</td>
+                    <td>{{ data.gym_class.instructor }}</td>
+                    <td>{{ data.gym_class.facility }}</td>
+                    <td>{{ data.gym_class.start_time }}</td>
+                    <td>{{ data.gym_class.end_time }}</td>
+                    <td>{{ data.attended_count }}/{{ data.total_bookings }}</td>
+                    <td class="d-flex flex-column flex-md-row gap-1">
+                        <a href="{% url 'edit_class' data.gym_class.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete_class' data.gym_class.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'manage_attendance' data.gym_class.id %}" class="btn btn-primary btn-sm">Attendance</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No classes available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap Cards for Small Screens -->
+    <div class="d-block d-md-none">
+        {% for data in class_data %}
+        <div class="card mb-3 shadow">
+            <div class="card-body">
+                <h5 class="card-title">{{ data.gym_class.name }}</h5>
+                <p class="card-text"><strong>Instructor:</strong> {{ data.gym_class.instructor }}</p>
+                <p class="card-text"><strong>Facility:</strong> {{ data.gym_class.facility }}</p>
+                <p class="card-text"><strong>Time:</strong> {{ data.gym_class.start_time }} - {{ data.gym_class.end_time }}</p>
+                <p class="card-text"><strong>Attendance:</strong> {{ data.attended_count }}/{{ data.total_bookings }}</p>
+                
+                <div class="d-flex flex-column gap-2">
                     <a href="{% url 'edit_class' data.gym_class.id %}" class="btn btn-warning btn-sm">Edit</a>
                     <a href="{% url 'delete_class' data.gym_class.id %}" class="btn btn-danger btn-sm">Delete</a>
-                    <a href="{% url 'manage_attendance' data.gym_class.id %}" class="btn btn-primary btn-sm">Manage Attendance</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="7" class="text-center text-muted">No classes available.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    <a href="{% url 'manage_attendance' data.gym_class.id %}" class="btn btn-primary btn-sm">Attendance</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No classes available.</p>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
